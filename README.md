@@ -77,15 +77,18 @@
 
 ## ⚫ 4. Propulsion & Simulated Flight Performance
 
-> **Reference Motor:** AeroTech G80T / AeroTech G76G (Class G, 29–38 mm)
+> **Reference Motor:** Custom Sugar Motor (KNSB / KNSU G-Class, 38 mm Casing)
 
-* **Peak Altitude (Apogee):** 653 m (2,142 ft)
-* **Max Velocity:** 213 m/s (Mach 0.627 / 766 km/h)
-* **Peak Acceleration:** 211 m/s² (~21.5 g)
-* **Burn Time:** ~1.8 s
-* **Coast Time:** ~4.7 s *(Total time to apogee: 6.5 s)*
-* **Recovery Deployment:** Ejection charge triggered at apogee (6.5 s – 7.0 s delay)
-* **Descent Velocity at Touchdown:** ~6.5 m/s
+* **Propellant Mass:** 125 g (65:35 KNO₃ : Sugar/Sorbitol)
+* **Total Loaded Motor Mass:** ~240 g (Burnout mass: ~115 g)
+* **Total Impulse (I_tot):** ~140 N·s
+* **Peak Altitude (Apogee):** ~625 m (2,050 ft)
+* **Max Velocity:** ~175 m/s (Mach 0.51 / 630 km/h)
+* **Peak Acceleration:** ~135 m/s² (~13.8 g)
+* **Average Thrust:** ~78 N (Burn Time: ~1.8 s)
+* **Coast Time:** ~4.9 s (Total time to apogee: ~6.7 s)
+* **Recovery Deployment:** Ejection charge / altimeter deployment triggered at apogee (~6.5 s - 7.0 s delay)
+* **Descent Velocity at Touchdown:** ~6.8 m/s
 
 ---
 
