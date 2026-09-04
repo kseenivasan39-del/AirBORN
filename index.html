@@ -17,6 +17,22 @@
             height: 500vh; /* Make the page scrollable */
             font-family: system-ui, -apple-system, sans-serif;
             overflow-x: hidden;
+            
+            /* Prevent text selection */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Prevent image dragging and saving */
+        img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
         }
 
         #video-container {
@@ -1820,6 +1836,9 @@
                 observer.observe(section);
             });
         });
+        
+        // Prevent right-clicking anywhere on the page to protect assets
+        document.addEventListener('contextmenu', event => event.preventDefault());
     </script>
 
     <div class="process-section">
