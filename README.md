@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="assets/sticker.jpg" alt="AirBORN Mission Patch" width="250" style="border-radius: 50%; margin-bottom: 20px;" />
-
 # 🚀 **AirBORN** 🚀
 ### RISE. EXPLORE. INSPIRE.
 
@@ -104,4 +102,8 @@
 <br/>
 <div align="center">
   <h3>AIRBORN. ABOVE ALL.</h3>
+</div>
+
+<div align="center">
+  <img src="assets/sticker.jpg" alt="AirBORN Mission Patch" width="250" style="border-radius: 50%; margin-top: 40px; margin-bottom: 20px;" />
 </div>
