@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirBORN - Product Reveal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            height: 500vh; /* Make the page scrollable */
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
+
+        #video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+        }
+
+        canvas {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            transform-origin: left center;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 10%;
+        }
+
+        .section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 12px rgba(0,0,0,0.9);
+        }
+
+        p {
+            font-size: 1.5rem;
+            max-width: 500px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+            line-height: 1.5;
+        }
+
+        /* Hero Section Styles */
+        .hero-subtitle {
+            color: #d82b27;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.05;
+            margin: 0 0 25px 0;
+            text-transform: uppercase;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            letter-spacing: -0.5px;
+            max-width: 45%;
+        }
+        
+        .hero-title .dark-text {
+            color: #ffffff;
+            display: block;
+            /* Replaced harsh shadow with a very soft, premium diffusion */
+            text-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+        }
+        
+        .hero-title .red-text {
+            color: #d82b27;
+            display: block;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: #333333;
+            max-width: 420px;
+            line-height: 1.6;
+            margin-bottom: 45px;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-weight: 400;
+            text-shadow: none;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            background-color: #d82b27;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 16px 36px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(216, 43, 39, 0.2);
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            background-color: #b7201e;
+            box-shadow: 0 6px 20px rgba(216, 43, 39, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #1a1a1a;
+            border: 1px solid rgba(26, 26, 26, 0.3);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 16px 36px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            text-transform: uppercase;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(26, 26, 26, 0.05);
+            border-color: rgba(26, 26, 26, 0.8);
+            transform: translateY(-1px);
+        }
+
+        /* Component Section Styles */
+        .component-section {
+            justify-content: flex-start;
+            padding-top: 120px; /* Pushes it just below the hidden navbar */
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.4s ease-out, transform 0.8s ease-out;
+        }
+
+        .component-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #recovery-section, #propulsion-section, #architecture-section {
+            padding-top: 0;
+            margin-top: -20px;
+            position: relative;
+        }
+
+        .small-component .component-title {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+
+        .small-component .component-desc {
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .small-component .feature-text h4 {
+            font-size: 0.75rem;
+        }
+
+        .small-component .feature-text p {
+            font-size: 0.75rem;
+        }
+
+        .small-component .feature-icon {
+            width: 35px;
+            height: 35px;
+        }
+
+        .small-component .feature-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .small-component .feature-list {
+            gap: 15px;
+        }
+
+        .component-block {
+            max-width: 450px;
+        }
+
+        .component-subtitle {
+            color: #d82b27;
+            font-size: 13px;
+            font-weight: 800;
+            font-size: 13px;
+            color: #d82b27;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: 'Rajdhani', sans-serif;
+        }
+        
+        .component-subtitle .line {
+            height: 1px;
+            width: 50px;
+            background-color: #d82b27;
+        }
+
+        .component-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+            max-width: 90%;
+        }
+
+        .final-section {
+            background-color: #0b0b0d;
+            background-image: linear-gradient(to right, transparent 40vh, #0b0b0d 46.5vh), url('assets/left_bg.png');
+            background-size: cover, auto 100%;
+            background-position: left bottom, left bottom;
+            background-repeat: no-repeat, no-repeat;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 100px 5% 100px 8%;
+            position: relative;
+            z-index: 10;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .final-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('assets/rocket_new.jpg');
+            background-position: right -10vw bottom;
+            background-repeat: no-repeat;
+            background-size: auto 100%;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%);
+            -webkit-mask-size: auto 100%;
+            -webkit-mask-position: right -10vw bottom;
+            -webkit-mask-repeat: no-repeat;
+            mask-image: linear-gradient(to right, transparent 0%, black 15%);
+            mask-size: auto 100%;
+            mask-position: right -10vw bottom;
+            mask-repeat: no-repeat;
+            z-index: -1;
+        }
+        
+        .perf-container {
+            max-width: 750px;
+            width: 100%;
+        }
+
+        @media (max-width: 1400px) {
+            .perf-container {
+                max-width: 650px;
+            }
+            .final-section {
+                padding-left: 5%;
+            }
+        }
+        
+        @media (max-width: 1100px) {
+            .perf-container {
+                max-width: 550px;
+            }
+            .perf-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .process-section {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .process-top {
+            background-color: #f5f5f5;
+            color: #111;
+            padding: 80px 5%;
+        }
+
+        .process-header {
+            margin-bottom: 40px;
+        }
+
+        .process-subtitle {
+            color: #d82b27;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .process-title {
+            color: #111;
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-top: 60px;
+            gap: 20px;
+        }
+
+        .step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .step-icon {
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 30px;
+        }
+
+        .step-number {
+            color: #d82b27;
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+
+        .step-name {
+            color: #111;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .step-desc {
+            color: #555;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .step-arrow {
+            position: relative;
+            width: 1px;
+            height: 160px;
+            background-color: #ddd;
+            margin-top: 10px;
+        }
+
+        .step-arrow::after {
+            content: '\2794';
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f5f5f5;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111;
+            font-size: 0.7rem;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px #eee;
+        }
+
+        .process-gallery {
+            background-color: #111;
+            display: flex;
+            padding: 80px 5%;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .gallery-info {
+            flex: 0 0 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-subtitle {
+            color: #d82b27;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .gallery-title {
+            color: #fff;
+            font-size: 2.5rem;
+            margin: 0 0 30px 0;
+            font-weight: 700;
+        }
+
+        .btn-view-all {
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 25px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-align: center;
+            align-self: flex-start;
+        }
+
+        .btn-view-all:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        .gallery-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            aspect-ratio: 4/3;
+        }
+
+        .gallery-caption {
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .mission-section {
+            background-color: #f0f0f0;
+            padding: 80px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .mission-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .mission-divider {
+            width: 1px;
+            height: 120px;
+            background-color: #ddd;
+        }
+
+        .col-1 { flex: 1; }
+        .col-2 { flex: 1.5; align-items: center; position: relative; }
+        .col-3 { flex: 1; }
+        .col-4 { flex: 0.8; display: flex; justify-content: center; }
+
+        .mission-title {
+            color: #d82b27;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .mission-text {
+            color: #333;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .mission-subtitle {
+            color: #444;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .mission-value {
+            color: #d82b27;
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: 'Rajdhani', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .mission-mountains {
+            width: 100%;
+            max-width: 350px;
+            object-fit: contain;
+            mix-blend-mode: darken;
+        }
+
+        .mission-status-val {
+            color: #111;
+            font-size: 1.4rem;
+            font-weight: 800;
+            font-family: 'Rajdhani', sans-serif;
+            margin-bottom: 40px;
+        }
+
+        .mission-progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .progress-label {
+            color: #444;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .progress-val {
+            color: #d82b27;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .mission-progress-bar {
+            width: 100%;
+            max-width: 250px;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #d82b27;
+            border-radius: 4px;
+            width: 0%;
+            transition: width 2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .mission-section.visible .progress-fill {
+            width: 25%;
+        }
+
+        .mission-dial-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            mix-blend-mode: darken;
+        }
+
+        .mission-dial-bg, .mission-dial-needle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .mission-dial-needle {
+            transform: rotate(0deg);
+            transform-origin: center center;
+            transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .mission-section.visible .mission-dial-needle {
+            transform: rotate(720deg); /* 2 full spins for 2000ft */
+        }
+
+        .team-section {
+            background-color: #0b0b0d;
+            padding: 80px 5%;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .team-intro {
+            flex: 0 0 350px;
+            padding-right: 40px;
+        }
+
+        .team-subtitle {
+            color: #d82b27;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .team-title {
+            color: #fff;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .team-desc {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .team-grid {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .team-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .team-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20px;
+            height: 100px;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .team-item img {
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .team-role {
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+
+        .footer-section {
+            background-color: #0b0b0d;
+            padding: 60px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        .footer-brand {
+            flex: 0 0 250px;
+        }
+
+        .footer-logo {
+            width: 180px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .footer-tagline {
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .footer-copy {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .footer-links {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-nav-title {
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #fff;
+        }
+
+        .footer-contact {
+            flex: 0 0 250px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-contact-text {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .footer-socials a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .footer-socials a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-origin {
+            color: #888;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        .perf-subtitle {
+            color: #d82b27;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .perf-title {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .perf-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .perf-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .perf-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+            border-color: rgba(216, 43, 39, 0.3);
+        }
+
+        .perf-icon {
+            color: #d82b27;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .perf-info h4 {
+            font-size: 0.75rem;
+            color: #888;
+            margin: 0 0 5px 0;
+            letter-spacing: 1px;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .perf-info .perf-main {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 5px 0;
+            font-family: 'Rajdhani', sans-serif;
+            text-shadow: none;
+        }
+
+        .perf-info .perf-sub {
+            font-size: 0.75rem;
+            color: #666;
+            margin: 0;
+            line-height: 1.2;
+            text-shadow: none;
+        }
+
+        .timeline-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 48px;
+            left: 5%;
+            right: 5%;
+            height: 2px;
+            background: linear-gradient(90deg, #d82b27 0%, rgba(216, 43, 39, 0.2) 100%);
+            z-index: 1;
+        }
+
+        .timeline-event {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .timeline-node {
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 0 4px #0b0b0d, 0 0 0 5px #d82b27;
+        }
+        
+        .timeline-event h4 {
+            font-size: 0.85rem;
+            color: #fff;
+            margin: 0 0 5px 0;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline-time {
+            font-size: 0.9rem;
+            color: #d82b27;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .timeline-desc {
+            font-size: 0.75rem;
+            color: #888;
+            margin: 0;
+            line-height: 1.4;
+            text-shadow: none;
+        }
+
+        .component-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0 0 25px 0;
+            text-transform: uppercase;
+            font-family: 'Rajdhani', sans-serif;
+            display: flex;
+            gap: 15px;
+            letter-spacing: -0.5px;
+        }
+        
+        .component-title .dark-text { color: #1a1a1a; }
+        .component-title .red-text { color: #d82b27; }
+
+        .component-desc {
+            font-size: 1.05rem;
+            color: #444444;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-family: system-ui, -apple-system, sans-serif;
+            text-shadow: none;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            background: rgba(0,0,0,0.03);
+            color: #d82b27;
+        }
+        
+        .feature-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .feature-text h4 {
+            margin: 0 0 5px 0;
+            font-size: 0.85rem;
+            color: #1a1a1a;
+            font-weight: 800;
+            letter-spacing: 1px;
+            font-family: system-ui, -apple-system, sans-serif;
+            text-shadow: none;
+        }
+
+        .feature-text p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #555555;
+            line-height: 1.5;
+            font-family: system-ui, -apple-system, sans-serif;
+            text-shadow: none;
+        }
+
+        .feature-item.text-white .feature-text h4 {
+            color: #ffffff;
+        }
+
+        .feature-item.text-white .feature-text p {
+            color: #cccccc;
+        }
+
+        #propulsion-section .feature-text p {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        /* Specs Panel Styles */
+        .specs-panel {
+            background: rgba(240, 240, 240, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 25px 30px;
+            backdrop-filter: blur(8px);
+            display: inline-flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .specs-title {
+            color: #b7201e;
+            font-size: 13px;
+            font-weight: 800;
+            margin: 0 0 20px 0;
+            letter-spacing: 1px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .specs-grid {
+            display: flex;
+        }
+
+        .spec-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 25px;
+            border-right: 1px solid rgba(183, 32, 30, 0.2);
+        }
+
+        .spec-col:first-child {
+            padding-left: 0;
+        }
+
+        .spec-col:last-child {
+            padding-right: 0;
+            border-right: none;
+        }
+
+        .spec-icon {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .spec-name {
+            font-size: 11px;
+            font-weight: 800;
+            color: #111;
+            margin: 0 0 8px 0;
+            letter-spacing: 0.5px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .spec-val {
+            font-size: 11px;
+            color: #444;
+            margin: 0;
+            max-width: 90px;
+            line-height: 1.4;
+            font-family: system-ui, -apple-system, sans-serif;
+            text-shadow: none;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            box-sizing: border-box;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.5px;
+            font-family: 'Arial Black', Impact, sans-serif;
+        }
+
+        .logo-white {
+            color: #ffffff;
+        }
+
+        .logo-red {
+            color: #d82b27;
+        }
+        
+        .rocket-icon {
+            width: 36px;
+            height: 36px;
+            margin-left: 2px;
+            fill: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 35px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links li a:hover {
+            color: #d82b27;
+        }
+
+        .nav-links li a.active {
+            color: #ffffff;
+        }
+
+        .nav-links li a.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 25px;
+            height: 2px;
+            background-color: #d82b27;
+        }
+
+        .explore-btn {
+            background-color: #b7201e;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 12px 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .explore-btn:hover {
+            background-color: #d82b27;
+        }
+
+        .explore-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-white">Air</span><span class="logo-red">BORN</span>
+            <svg class="rocket-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <!-- Exhaust -->
+                <path d="M12 52 Q 20 40 32 45 Q 25 55 12 52 Z" fill="#d82b27"/>
+                <path d="M18 58 Q 28 48 38 52 Q 32 62 18 58 Z" fill="#d82b27"/>
+                <!-- Rocket Body -->
+                <path d="M30 40 L 40 50 L 58 20 C 62 10 60 4 52 10 L 30 40 Z" fill="#ffffff"/>
+                <!-- Fins -->
+                <path d="M40 50 L 50 60 L 52 48 Z" fill="#ffffff"/>
+                <path d="M30 40 L 20 30 L 32 28 Z" fill="#ffffff"/>
+            </svg>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">HOME</a></li>
+            <li><a href="#">ABOUT US</a></li>
+            <li><a href="#">TECHNOLOGY</a></li>
+            <li><a href="#">MISSIONS</a></li>
+            <li><a href="#">GALLERY</a></li>
+            <li><a href="#">NEWS</a></li>
+            <li><a href="#">CONTACT</a></li>
+        </ul>
+        <a href="#" class="explore-btn">
+            EXPLORE MORE 
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M10 8L14 12L10 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+    </nav>
+    <div id="video-container">
+        <canvas id="hero-lightpass"></canvas>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <div class="hero-subtitle">Rise. Explore. Inspire.</div>
+            <h1 class="hero-title">
+                <span class="dark-text">Engineered</span>
+                <span class="dark-text">To Rise.</span>
+                <span class="red-text">Built to Explore.</span>
+            </h1>
+            <p class="hero-desc">AirBORN is a 1st gen rocket system designed and built in India.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">
+                    OUR TECHNOLOGY 
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="#" class="btn-secondary">
+                    WATCH VIDEO 
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M10 8L16 12L10 16V8Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="section component-section">
+            <div style="display: flex; gap: 80px; align-items: flex-start; width: 100%;">
+                <!-- Left Column: Component Details -->
+                <div class="component-block">
+                    <div class="component-subtitle">COMPONENT <span class="line"></span></div>
+                    <h2 class="component-title"><span class="dark-text">NOSE</span> <span class="red-text">CONE</span></h2>
+                    <p class="component-desc">Aerodynamic tangent ogive nose cone designed for minimum drag and maximum stability.</p>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h4>TANGENT OGIVE PROFILE</h4>
+                                <p>Optimal shape for reduced drag and smooth airflow.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item text-white">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8v-2c0-3.313 2.687-6 6-6s6 2.687 6 6v2m-15 0h18v14h-18z"/><circle cx="12" cy="14" r="2" fill="currentColor"/></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h4>BALLAST SYSTEM</h4>
+                                <p>40-60 g of lead shot encapsulated in epoxy at the tip for stability.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item text-white">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10v-5l-8-3-8 3v5c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h4>BUILT TO LAST</h4>
+                                <p>Custom fiberglass / composite / 3D printed for strength and durability.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Specs Panel -->
+                <div class="specs-panel">
+                    <h3 class="specs-title">NOSE CONE SPECIFICATIONS</h3>
+                    <div class="specs-grid">
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20 C 4 10 12 4 20 4 C 12 12 4 20 4 20 Z"/><path d="M4 20 C 8 16 16 16 20 16" stroke="#d82b27"/></svg>
+                            <h4 class="spec-name">TYPE</h4>
+                            <p class="spec-val">Tangent Ogive</p>
+                        </div>
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polygon points="2 12 12 17 22 12"/><polygon points="2 17 12 22 22 17"/></svg>
+                            <h4 class="spec-name">MATERIAL</h4>
+                            <p class="spec-val">Fiberglass / Composite /<br>3D Printed</p>
+                        </div>
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 8v-2c0-3.313 2.687-6 6-6s6 2.687 6 6v2m-15 0h18v14h-18z"/><circle cx="12" cy="14" r="2" fill="#d82b27" stroke="#d82b27"/></svg>
+                            <h4 class="spec-name">BALLAST</h4>
+                            <p class="spec-val">40 - 60 g</p>
+                        </div>
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#d82b27" stroke="#d82b27"/></svg>
+                            <h4 class="spec-name">POSITIONING</h4>
+                            <p class="spec-val">Extreme Tip</p>
+                        </div>
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 8 h12 a2 2 0 0 0 0 -4 h-2"/><path d="M2 14 h16 a2 2 0 0 1 0 4 h-4"/><path d="M6 20 h6 a2 2 0 0 0 0 -4 h-2"/></svg>
+                            <h4 class="spec-name">FUNCTION</h4>
+                            <p class="spec-val">Stability &<br>Drag Reduction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section component-section" id="recovery-section">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                <div class="component-block small-component" style="max-width: 380px; margin-left: -6vw;">
+                    <div class="component-subtitle">COMPONENT <span class="line"></span></div>
+                    <h2 class="component-title"><span class="dark-text">RECOVERY</span> <span class="red-text">SYSTEM</span></h2>
+                    <p class="component-desc">Reliable recovery system engineered to ensure safe descent and minimal landing impact.</p>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v6m-8 4c0-4.4 3.6-8 8-8s8 3.6 8 8m-16 0h16M7 12l2 8M17 12l-2 8M12 12v8M9 20h6"/></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h4>EFFICIENT DECELERATION</h4>
+                                <p>45 cm ripstop nylon parachute ensures stable and controlled descent.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h4>STRONG & RELIABLE</h4>
+                                <p>Kevlar / elastic shock cord designed to absorb landing shock.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10v-5l-8-3-8 3v5c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h4>PROTECTED & SECURE</h4>
+                                <p>Flame-resistant wadding protects the parachute from heat and abrasion.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8v-2c0-3.313 2.687-6 6-6s6 2.687 6 6v2m-15 0h18v14h-18z"/><circle cx="12" cy="14" r="2" fill="currentColor"/></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h4>SECURE ATTACHMENT</h4>
+                                <p>Shock cord anchored to the forward centering ring bulkhead.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Recovery Specs Panel -->
+                <div class="specs-panel" style="margin-right: -4vw;">
+                    <h3 class="specs-title">RECOVERY SYSTEM SPECIFICATIONS</h3>
+                    <div class="specs-grid">
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v6m-8 4c0-4.4 3.6-8 8-8s8 3.6 8 8m-16 0h16M7 12l2 8M17 12l-2 8M12 12v8M9 20h6"/></svg>
+                            <h4 class="spec-name">PARACHUTE</h4>
+                            <p class="spec-val">45 cm diameter<br>Ripstop Nylon<br>(67 g/m²)</p>
+                        </div>
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="10" width="18" height="4" rx="2" transform="rotate(-45 12 12)"/></svg>
+                            <h4 class="spec-name">SHROUD LINES</h4>
+                            <p class="spec-val">6 Lines<br>(45 cm each)</p>
+                        </div>
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <h4 class="spec-name">SHOCK CORD</h4>
+                            <p class="spec-val">Kevlar /<br>Elastic</p>
+                        </div>
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#d82b27" stroke="#d82b27"/></svg>
+                            <h4 class="spec-name">DEPLOYMENT</h4>
+                            <p class="spec-val">Apogee<br>(~6.5 s - 7.0 s)</p>
+                        </div>
+                        <div class="spec-col">
+                            <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            <h4 class="spec-name">LANDING VELOCITY</h4>
+                            <p class="spec-val">~6.8 m/s</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Left: Avionics Note -->
+            <div style="position: absolute; bottom: 15vh; left: -6vw;">
+                <h3 class="specs-title" style="margin:0; font-size: 15px;">AVIONICS SYSTEM</h3>
+                <p class="component-desc" style="font-size: 0.95rem; margin-top: 8px;">Avionics system will be updated soon.</p>
+            </div>
+        </div>
+
+        <div class="section component-section" id="propulsion-section">
+            <div class="component-block small-component" style="max-width: 380px; margin-left: -6vw;">
+                <div class="component-subtitle">PROPULSION <span class="line"></span></div>
+                <h2 class="component-title"><span class="dark-text">CUSTOM</span> <span class="red-text" style="display:block;">SUGAR MOTOR</span></h2>
+                <p class="component-desc">Custom KNSB / KNSU G-Class sugar motor delivers the thrust needed to reach new heights.</p>
+                
+                <div class="feature-list" style="gap: 12px;">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c0 0-4 4-4 10a4 4 0 0 0 8 0c0-6-4-10-4-10z"/><path d="M12 10c-1.5 2-1.5 4-1.5 4"/></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>TOTAL IMPULSE</h4>
+                            <p>~140 N·s</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>AVERAGE THRUST</h4>
+                            <p>~78 N</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l2 2"/></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>BURN TIME</h4>
+                            <p>~1.8 s</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 14l8-10 8 10v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6z"/><path d="M12 22v-4"/></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>PROPELLANT MASS</h4>
+                            <p>125 g</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12H4l2 8h12l2-8z"/><path d="M12 2v6"/><path d="M8 8l4-6 4 6"/></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>TOTAL MOTOR MASS</h4>
+                            <p>~240 g<br>(Burnout ~115 g)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Right: Fin System -->
+            <div class="component-block small-component" style="position: absolute; top: 0; right: 2vw; max-width: 480px;">
+                <div class="component-subtitle">STABILITY <span class="line"></span></div>
+                <h2 class="component-title"><span class="dark-text">FIN</span> <span class="red-text">SYSTEM</span></h2>
+                <p class="component-desc">3-fin symmetrical configuration provides stability and precise flight control.</p>
+                
+                <div class="feature-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px 25px;">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 12L8 5M12 12l8 2M12 12l-4 8"/></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>CONFIGURATION</h4>
+                            <p>3-Fin</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18L18 6M8 20L20 8M6 18l2 2 12-12-2-2-12 12z"/></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>FIN MATERIAL</h4>
+                            <p>3 mm Plywood<br>(Aircraft Grade)</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 18h16l-4-12H8L4 18z"/></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>FIN SHAPE</h4>
+                            <p>Trapezoidal</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M12 12l4-6"/></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>FIN SPACING</h4>
+                            <p>120°</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motor Labels -->
+            <!-- Top Right: Casing -->
+            <div style="position: absolute; bottom: 25vh; left: 47vw;">
+                <h4 style="margin:0; font-size: 13px; color: #ffffff; font-weight: 800; font-family: system-ui, sans-serif;">38mm Casing</h4>
+                <p style="margin: 2px 0 0 0; font-size: 11px; color: #eeeeee; font-family: system-ui, sans-serif;">(Outer Diameter)</p>
+                <!-- Connecting Line -->
+                <div style="position: absolute; width: 1px; height: 35px; border-left: 1px dashed #d82b27; left: 10px; top: 100%; margin-top: 5px;">
+                    <div style="position: absolute; width: 5px; height: 5px; background: #d82b27; border-radius: 50%; bottom: -3px; left: -3px;"></div>
+                </div>
+            </div>
+
+            <!-- Bottom Right: Loaded Length -->
+            <div style="position: absolute; bottom: 10vh; left: 46vw;">
+                <!-- Connecting Line -->
+                <div style="position: absolute; width: 1px; height: 35px; border-left: 1px dashed #d82b27; left: 10px; bottom: 100%; margin-bottom: 5px;">
+                    <div style="position: absolute; width: 5px; height: 5px; background: #d82b27; border-radius: 50%; top: -3px; left: -3px;"></div>
+                </div>
+                <h4 style="margin:0; font-size: 13px; color: #111; font-weight: 800; font-family: system-ui, sans-serif;">Loaded Length</h4>
+                <p style="margin: 2px 0 0 0; font-size: 11px; color: #444; font-family: system-ui, sans-serif;">15.0 cm</p>
+            </div>
+
+            <!-- Bottom Left: Propellant -->
+            <div style="position: absolute; bottom: 10vh; right: 47vw; text-align: right;">
+                <!-- Connecting Line -->
+                <div style="position: absolute; width: 1px; height: 35px; border-right: 1px dashed #d82b27; right: 10px; bottom: 100%; margin-bottom: 5px;">
+                    <div style="position: absolute; width: 5px; height: 5px; background: #d82b27; border-radius: 50%; top: -3px; right: -3px;"></div>
+                </div>
+                <h4 style="margin:0; font-size: 13px; color: #111; font-weight: 800; font-family: system-ui, sans-serif;">Propellant</h4>
+                <p style="margin: 2px 0 0 0; font-size: 11px; color: #444; font-family: system-ui, sans-serif;">KNO₃ / Sugar<br>(65:35)</p>
+            </div>
+
+            <!-- Bottom Left: Motor Performance Specs Panel -->
+            <div class="specs-panel" style="position: absolute; bottom: 14vh; left: -6vw; padding: 20px 25px; transform: scale(0.55); transform-origin: bottom left;">
+                <h3 class="specs-title">MOTOR PERFORMANCE (SIMULATED)</h3>
+                <div class="specs-grid" style="gap: 25px;">
+                    <div class="spec-col">
+                        <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 17L14.5 5.5a1.5 1.5 0 00-2.6 0L8 12.5M3 17l4.5-8m8 8L12 11.5"/></svg>
+                        <h4 class="spec-name">PEAK ALTITUDE</h4>
+                        <p class="spec-val" style="font-size: 1.15rem; font-weight: 700; color: #111;">~625 m<br><span style="font-size: 0.75rem; font-weight: 400; color: #555;">(2,050 ft)</span></p>
+                    </div>
+                    <div class="spec-col">
+                        <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        <h4 class="spec-name">MAX VELOCITY</h4>
+                        <p class="spec-val" style="font-size: 1.15rem; font-weight: 700; color: #111;">~175 m/s<br><span style="font-size: 0.75rem; font-weight: 400; color: #555;">(Mach 0.51)</span></p>
+                    </div>
+                    <div class="spec-col">
+                        <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/><path d="M12 10V5M10 12H5M14 12h5"/></svg>
+                        <h4 class="spec-name">PEAK ACCELERATION</h4>
+                        <p class="spec-val" style="font-size: 1.15rem; font-weight: 700; color: #111;">~135 m/s²<br><span style="font-size: 0.75rem; font-weight: 400; color: #555;">(~13.8 g)</span></p>
+                    </div>
+                    <div class="spec-col">
+                        <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l2 2"/></svg>
+                        <h4 class="spec-name">TOTAL TIME TO APOGEE</h4>
+                        <p class="spec-val" style="font-size: 1.15rem; font-weight: 700; color: #111; margin-bottom: 12px;">~6.7 s</p>
+                    </div>
+                    <div class="spec-col">
+                        <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v6m-8 4c0-4.4 3.6-8 8-8s8 3.6 8 8m-16 0h16M7 12l2 8M17 12l-2 8M12 12v8M9 20h6"/></svg>
+                        <h4 class="spec-name">DESCENT VELOCITY</h4>
+                        <p class="spec-val" style="font-size: 1.15rem; font-weight: 700; color: #111; margin-bottom: 12px;">~6.8 m/s</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="section component-section" id="architecture-section">
+            <div class="component-block small-component" style="position: absolute; top: 15vh; left: -6vw; max-width: 480px;">
+                <div class="component-subtitle">MK-1 ARCHITECTURE <span class="line"></span></div>
+                <h2 class="component-title" style="display: block; margin-top: 15px; font-size: 2.2rem; line-height: 1.1;"><span style="color: #fff;">BUILT WITH PURPOSE.</span><br><span style="color: #fff;">POWERED BY </span><span class="red-text">PRECISION.</span></h2>
+                <p class="component-desc" style="font-size: 1.1rem; line-height: 1.6; margin-top: 20px;">Every component is carefully engineered<br>to deliver peak performance, stability,<br>and safe recovery.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Post-Scroll Final Section -->
+    <div class="final-section">
+        <div class="perf-container">
+            <h3 class="perf-subtitle">SIMULATED FLIGHT PERFORMANCE</h3>
+            <h2 class="perf-title">REFERENCE MOTOR: CUSTOM SUGAR MOTOR (KNSB / KNSU G-CLASS)</h2>
+            
+            <div class="perf-grid">
+                <!-- Row 1 -->
+                <div class="perf-card">
+                    <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c0 0-4 4-4 10a4 4 0 0 0 8 0c0-6-4-10-4-10z"/></svg></div>
+                    <div class="perf-info">
+                        <h4>PROPELLANT MASS</h4>
+                        <p class="perf-main">125 g</p>
+                        <p class="perf-sub">(65:35 KNO₃ : Sugar/Sorbitol)</p>
+                    </div>
+                </div>
+                <div class="perf-card">
+                    <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22V2M8 6l4-4 4 4"/></svg></div>
+                    <div class="perf-info">
+                        <h4>TOTAL IMPULSE</h4>
+                        <p class="perf-main">~140 N·s</p>
+                        <p class="perf-sub">&nbsp;</p>
+                    </div>
+                </div>
+                <div class="perf-card">
+                    <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></svg></div>
+                    <div class="perf-info">
+                        <h4>PEAK ALTITUDE</h4>
+                        <p class="perf-main">~625 m</p>
+                        <p class="perf-sub">(2,050 ft)</p>
+                    </div>
+                </div>
+                <div class="perf-card">
+                    <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M12 6l3 3M12 6L9 9"/></svg></div>
+                    <div class="perf-info">
+                        <h4>MAX VELOCITY</h4>
+                        <p class="perf-main">~175 m/s</p>
+                        <p class="perf-sub">(Mach 0.51 / 630 km/h)</p>
+                    </div>
+                </div>
+                <!-- Row 2 -->
+                <div class="perf-card">
+                    <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+                    <div class="perf-info">
+                        <h4>PEAK ACCELERATION</h4>
+                        <p class="perf-main">~135 m/s²</p>
+                        <p class="perf-sub">(~13.8 g)</p>
+                    </div>
+                </div>
+                <div class="perf-card">
+                    <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6v6l4 2"/></svg></div>
+                    <div class="perf-info">
+                        <h4>AVERAGE THRUST</h4>
+                        <p class="perf-main">~78 N</p>
+                        <p class="perf-sub">(Burn Time ~1.8 s)</p>
+                    </div>
+                </div>
+                <div class="perf-card">
+                    <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+                    <div class="perf-info">
+                        <h4>COAST TIME</h4>
+                        <p class="perf-main">~4.9 s</p>
+                        <p class="perf-sub">(Total to apogee ~6.7 s)</p>
+                    </div>
+                </div>
+                <div class="perf-card">
+                    <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l-4 2"/></svg></div>
+                    <div class="perf-info">
+                        <h4>TOUCHDOWN VELOCITY</h4>
+                        <p class="perf-main">~6.8 m/s</p>
+                        <p class="perf-sub">&nbsp;</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-event">
+                    <div class="timeline-node"></div>
+                    <h4>IGNITION</h4>
+                    <p class="timeline-time">0.0 s</p>
+                    <p class="timeline-desc">Motor ignition<br>& systems check</p>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-node"></div>
+                    <h4>LIFTOFF</h4>
+                    <p class="timeline-time">0.2 s</p>
+                    <p class="timeline-desc">Lift off from<br>launch rail</p>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-node"></div>
+                    <h4>POWERED ASCENT</h4>
+                    <p class="timeline-time">0.2 - 1.8 s</p>
+                    <p class="timeline-desc">Rocket accelerates<br>through atmosphere</p>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-node"></div>
+                    <h4>COAST PHASE</h4>
+                    <p class="timeline-time">1.8 - 6.7 s</p>
+                    <p class="timeline-desc">Motor burnout,<br>coasting towards apogee</p>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-node"></div>
+                    <h4>APOGEE</h4>
+                    <p class="timeline-time">~6.7 s</p>
+                    <p class="timeline-desc">Reaches peak<br>altitude</p>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-node"></div>
+                    <h4>RECOVERY</h4>
+                    <p class="timeline-time">~7.0+ s</p>
+                    <p class="timeline-desc">Parachute deploys,<br>safe descent and recovery</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById('hero-lightpass');
+        const context = canvas.getContext('2d');
+        const frameCount = 148; // Stopped at 148 to prevent phantom nosecone and baked-in text from appearing
+        
+        // Helper to format frame file name (frame_0001.jpg)
+        const currentFrame = index => (
+            `assets/frames/frame_${(index + 1).toString().padStart(4, '0')}.jpg`
+        )
+
+        // Preload images to ensure smooth scrolling
+        const images = [];
+        const preloadImages = () => {
+            for (let i = 0; i < frameCount; i++) {
+                images[i] = new Image();
+                images[i].src = currentFrame(i);
+            }
+        };
+
+        const img = new Image();
+        img.src = currentFrame(0);
+        
+        // Render the first frame on load
+        img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0);
+            
+            // Set initial transform (no scale to keep the rocket at its natural size)
+            canvas.style.transform = `scale(1) translateX(0%)`;
+        }
+
+        preloadImages();
+
+        let lastScrollTop = 0;
+        const navbar = document.querySelector('.navbar');
+
+        // Scrub through frames on scroll
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            
+            // The scrollable video portion is exactly 500vh (400vh scroll distance)
+            const maxScrollTop = window.innerHeight * 4; 
+            const scrollFraction = Math.min(1, scrollTop / maxScrollTop);
+            
+            // Navbar hide/show logic
+            if (scrollTop > 80) {
+                // Scrolled past the top
+                navbar.classList.add('hidden');
+            } else {
+                // At the top
+                navbar.classList.remove('hidden');
+            }
+            lastScrollTop = scrollTop;
+            
+            // Map scroll fraction to a frame index, finishing the animation at 75% scroll of the 400vh distance.
+            // This ensures the rocket is fully exploded by the time the Propulsion section is visible.
+            const adjustedFraction = Math.min(1, scrollFraction / 0.75);
+            const frameIndex = Math.min(
+                frameCount - 1,
+                Math.floor(adjustedFraction * frameCount)
+            );
+            
+            requestAnimationFrame(() => {
+                if(images[frameIndex] && images[frameIndex].complete) {
+                    context.drawImage(images[frameIndex], 0, 0);
+                }
+                // Keep it fixed
+                canvas.style.transform = `scale(1)`;
+            });
+        });
+        
+        // Fade in animation for component sections
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -20% 0px',
+            threshold: 0.4
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible'); // Optional: remove if you want it to fade out again when scrolling away
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.component-section, .mission-section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+    <div class="process-section">
+        <div class="process-top">
+            <div class="process-header">
+                <div class="process-subtitle">FROM CONCEPT TO FLIGHT</div>
+                <div class="process-title component-title">OUR ENGINEERING PROCESS</div>
+            </div>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <img src="assets/icons/icon_1.png" alt="Design" class="step-icon">
+                    <div class="step-number">01</div>
+                    <div class="step-name component-subtitle">DESIGN</div>
+                    <div class="step-desc">Conceptualize and model the vehicle</div>
+                </div>
+                <div class="step-arrow"></div>
+                <div class="step">
+                    <img src="assets/icons/icon_2.png" alt="Simulate" class="step-icon">
+                    <div class="step-number">02</div>
+                    <div class="step-name component-subtitle">SIMULATE</div>
+                    <div class="step-desc">Analyze and optimize performance</div>
+                </div>
+                <div class="step-arrow"></div>
+                <div class="step">
+                    <img src="assets/icons/icon_3.png" alt="Build" class="step-icon">
+                    <div class="step-number">03</div>
+                    <div class="step-name component-subtitle">BUILD</div>
+                    <div class="step-desc">Manufacture with precision</div>
+                </div>
+                <div class="step-arrow"></div>
+                <div class="step">
+                    <img src="assets/icons/icon_4.png" alt="Test" class="step-icon">
+                    <div class="step-number">04</div>
+                    <div class="step-name component-subtitle">TEST</div>
+                    <div class="step-desc">Rigorous testing at every stage</div>
+                </div>
+                <div class="step-arrow"></div>
+                <div class="step">
+                    <img src="assets/icons/icon_5.png" alt="Launch" class="step-icon">
+                    <div class="step-number">05</div>
+                    <div class="step-name component-subtitle">LAUNCH</div>
+                    <div class="step-desc">Execute and validate in real conditions</div>
+                </div>
+                <div class="step-arrow"></div>
+                <div class="step">
+                    <img src="assets/icons/icon_6.png" alt="Analyze" class="step-icon">
+                    <div class="step-number">06</div>
+                    <div class="step-name component-subtitle">ANALYZE</div>
+                    <div class="step-desc">Learn from data. Improve. Repeat.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="process-gallery">
+            <div class="gallery-info">
+                <div class="gallery-subtitle">INSIDE AIRBORN</div>
+                <div class="gallery-title component-title">GALLERY</div>
+                <a href="#" class="btn-view-all">VIEW ALL</a>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="assets/gallery/img_1.jpg" alt="Aero Design">
+                    <div class="gallery-caption">AERO DESIGN</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/gallery/img_2.jpg" alt="Fin Fabrication">
+                    <div class="gallery-caption">FIN FABRICATION</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/gallery/img_3.jpg" alt="Motor Assembly">
+                    <div class="gallery-caption">MOTOR ASSEMBLY</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/gallery/img_4.jpg" alt="Launch Prep">
+                    <div class="gallery-caption">LAUNCH PREP</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/gallery/img_5.jpg" alt="Test Flight">
+                    <div class="gallery-caption">TEST FLIGHT</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/gallery/img_6.jpg" alt="Recovery">
+                    <div class="gallery-caption">RECOVERY</div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End process-section -->
+
+    <div class="mission-section">
+        <div class="mission-col col-1">
+            <div class="mission-title">MISSION MK-1</div>
+            <div class="mission-text">
+                Our sights are set high.<br>
+                The journey has begun,<br>
+                and the sky is not the limit.
+            </div>
+        </div>
+        
+        <div class="mission-col col-2">
+            <div class="mission-subtitle">TARGET ALTITUDE</div>
+            <div class="mission-value">2000 ft+</div>
+            <img src="assets/mountains.png" alt="Mountains" class="mission-mountains">
+        </div>
+
+        <div class="mission-divider"></div>
+
+        <div class="mission-col col-3">
+            <div class="mission-subtitle">MISSION STATUS</div>
+            <div class="mission-status-val">DEVELOPMENT</div>
+            <div class="mission-progress-header">
+                <span class="progress-label">PROGRESS</span>
+                <span class="progress-val">25%</span>
+            </div>
+            <div class="mission-progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="mission-divider"></div>
+
+        <div class="mission-col col-4">
+            <div class="mission-dial-container">
+                <img src="assets/dial_bg.png" alt="Altimeter" class="mission-dial-bg">
+                <img src="assets/needle.png" alt="Needle" class="mission-dial-needle">
+            </div>
+        </div>
+    </div> <!-- End mission-section -->
+
+    <div class="team-section">
+        <div class="team-intro">
+            <div class="team-subtitle">THE TEAM</div>
+            <div class="team-title component-title">THE PEOPLE BEHIND AIRBORN</div>
+            <div class="team-desc">A team of dreamers, engineers, and innovators building the future one launch at a time.</div>
+        </div>
+        <div class="team-grid">
+            <div class="team-item">
+                <img src="assets/aerospacedesign.png" alt="Aerospace Design">
+                <div class="team-role">AEROSPACE<br>DESIGN</div>
+            </div>
+            <div class="team-item">
+                <img src="assets/proplusionsystem.png" alt="Propulsion Systems">
+                <div class="team-role">PROPULSION<br>SYSTEMS</div>
+            </div>
+            <div class="team-item">
+                <img src="assets/sturcutreandmaterial.png" alt="Structures & Materials">
+                <div class="team-role">STRUCTURES<br>& MATERIALS</div>
+            </div>
+            <div class="team-item">
+                <img src="assets/avionicsandcontrol.png" alt="Avionics & Control">
+                <div class="team-role">AVIONICS<br>& CONTROL</div>
+            </div>
+            <div class="team-item">
+                <img src="assets/recoverysystem.png" alt="Recovery Systems">
+                <div class="team-role">RECOVERY<br>SYSTEMS</div>
+            </div>
+            <div class="team-item">
+                <img src="assets/operatingsafety.png" alt="Operations & Safety">
+                <div class="team-role">OPERATIONS<br>& SAFETY</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-section">
+        <div class="footer-brand">
+            <img src="assets/airborn.png" alt="AirBORN" class="footer-logo">
+            <div class="footer-tagline">RISE. EXPLORE. INSPIRE.</div>
+            <div class="footer-copy">&copy; 2025 AirBORN. All rights reserved.</div>
+        </div>
+        
+        <div class="footer-links">
+            <div class="footer-col">
+                <div class="footer-nav-title">COMPANY</div>
+                <a href="#" class="footer-link">About Us</a>
+                <a href="#" class="footer-link">Our Team</a>
+                <a href="#" class="footer-link">Careers</a>
+            </div>
+            
+            <div class="footer-col">
+                <div class="footer-nav-title">TECHNOLOGY</div>
+                <a href="#" class="footer-link">Our Process</a>
+                <a href="#" class="footer-link">Design</a>
+                <a href="#" class="footer-link">Materials</a>
+            </div>
+            
+            <div class="footer-col">
+                <div class="footer-nav-title">PROJECTS</div>
+                <a href="#" class="footer-link">MK-1</a>
+                <a href="#" class="footer-link">Missions</a>
+                <a href="#" class="footer-link">Development</a>
+            </div>
+            
+            <div class="footer-col">
+                <div class="footer-nav-title">RESOURCES</div>
+                <a href="#" class="footer-link">News</a>
+                <a href="#" class="footer-link">Media Kit</a>
+                <a href="#" class="footer-link">Documentation</a>
+            </div>
+        </div>
+        
+        <div class="footer-contact">
+            <div class="footer-nav-title">CONTACT</div>
+            <div class="footer-contact-text">hello@airborn.in</div>
+            <div class="footer-contact-text">+91 98765 43210</div>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            </div>
+            <div class="footer-origin">
+                Engineered in India. For the world.
+                <img src="https://flagcdn.com/w20/in.png" alt="India Flag" style="vertical-align: middle; margin-left: 5px; border-radius: 2px;">
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
