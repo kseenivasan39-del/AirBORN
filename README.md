@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/sticker.jpg" alt="AirBORN Mission Patch" width="250" style="border-radius: 50%; margin-bottom: 20px;" />
+
 # 🚀 **AirBORN** 🚀
 ### RISE. EXPLORE. INSPIRE.
 
