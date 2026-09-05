@@ -31,7 +31,7 @@
 | Parameter | Dimension / Specification |
 | :--- | :--- |
 | **Total Rocket Length** | 62.0 cm |
-| **Maximum Body Diameter** | 7.5 cm (3.0 in) |
+| **Maximum Body Diameter** | 7.0 cm (2.75 in) |
 | **Dry Mass (No Motor)** | ~276 g – 336 g (with nose ballast) |
 | **Liftoff Mass (With Motor)** | ~423 g – 464 g |
 | **Center of Gravity (CG)** | 34.6 cm – 39.5 cm from nose tip |
@@ -44,11 +44,12 @@
 
 ### 🔻 Nose Cone
 * **Geometry:** Tangent Ogive Profile
+* **Aft Diameter (Base):** 7.0 cm
 * **Material:** Custom Fiberglass / Composite / 3D Print
 * **Internal Ballast:** 40 g to 60 g of lead shot / steel BBs encapsulated in slow-cure 2-part epoxy resin at the extreme tip to anchor aerodynamic stability.
 
 ### ⬛ Main Body Tube
-* **Dimensions:** Outer Diameter 7.5 cm, Length ~39.5 cm
+* **Dimensions:** Outer Diameter 7.0 cm, Inner Diameter 6.8 cm, Length ~39.5 cm
 * **Material:** Rigid composite / structural tube (shuttlecock storage tube geometry)
 * **Finish:** Smooth regular paint (60 µm) for low skin-friction drag.
 
@@ -66,7 +67,7 @@
 ### ⬛ Propulsion Subassembly (Motor Mount)
 * **Inner Tube Diameter:** Outer Diameter 3.8 cm (38 mm mount), Inner Diameter 3.5 cm (or adapted to 2.9 cm for 29 mm casings)
 * **Inner Tube Length:** 15.0 cm
-* **Centering Rings:** Dual 3 mm Birch Plywood rings (OD 7.3 cm, ID 3.8 cm) positioned at +2 cm and +13 cm from the aft end.
+* **Centering Rings:** Dual 3 mm Birch Plywood rings (OD 6.8 cm, ID 3.8 cm) positioned at +2 cm and +13 cm from the aft end.
 
 ### 🔻 Recovery System
 * **Parachute Canopy:** 45 cm diameter hemispherical canopy made of Ripstop Nylon (67 g/m², Cd = 0.800)
