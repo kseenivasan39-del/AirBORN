@@ -1856,21 +1856,6 @@
         
         // Prevent right-clicking anywhere on the page to protect assets
         document.addEventListener('contextmenu', event => event.preventDefault());
-
-        // View All gallery button functionality
-        document.querySelector('.btn-view-all').addEventListener('click', function(e) {
-            e.preventDefault();
-            const hiddenItems = document.querySelectorAll('.gallery-item-hidden');
-            let isShowing = hiddenItems[0].classList.contains('show');
-            
-            if (!isShowing) {
-                hiddenItems.forEach(item => item.classList.add('show'));
-                this.textContent = 'VIEW LESS';
-            } else {
-                hiddenItems.forEach(item => item.classList.remove('show'));
-                this.textContent = 'VIEW ALL';
-            }
-        });
     </script>
 
     <div class="process-section">
@@ -1929,7 +1914,7 @@
             <div class="gallery-info">
                 <div class="gallery-subtitle">INSIDE AIRBORN</div>
                 <div class="gallery-title component-title">GALLERY</div>
-                <a href="#" class="btn-view-all">VIEW ALL</a>
+                <a href="gallery.html" class="btn-view-all">VIEW ALL</a>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-item">
@@ -1955,14 +1940,6 @@
                 <div class="gallery-item">
                     <img src="assets/gallery/img_6.jpg" alt="Recovery">
                     <div class="gallery-caption">RECOVERY</div>
-                </div>
-                <div class="gallery-item gallery-item-hidden">
-                    <img src="assets/gallery/img_7.jpg" alt="Wind Tunnel Tests">
-                    <div class="gallery-caption">AERO TESTING</div>
-                </div>
-                <div class="gallery-item gallery-item-hidden">
-                    <img src="assets/gallery/img_8.jpg" alt="Flight Results">
-                    <div class="gallery-caption">FLIGHT DATA</div>
                 </div>
             </div>
         </div>
