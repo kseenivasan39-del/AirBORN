@@ -1411,46 +1411,10 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const lightbox = document.createElement('div');
-            lightbox.id = 'lightbox';
-            lightbox.className = 'lightbox';
-            lightbox.innerHTML = `
-                <span class="lightbox-close">&times;</span>
-                <img class="lightbox-content" id="lightbox-img">
-                <div id="lightbox-caption" class="lightbox-caption"></div>
-            `;
-            document.body.appendChild(lightbox);
+    
 
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxCaption = document.getElementById('lightbox-caption');
-
-            document.querySelectorAll('.gallery-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const img = item.querySelector('img');
-                    const caption = item.querySelector('.gallery-caption');
-                    if (img) {
-                        lightboxImg.src = img.src;
-                        lightboxCaption.textContent = caption ? caption.textContent : '';
-                        lightbox.classList.add('show');
-                    }
-                });
-            });
-
-            lightbox.addEventListener('click', (e) => {
-                if (e.target !== lightboxImg) {
-                    lightbox.classList.remove('show');
-                }
-            });
-            
-            // Re-apply right-click protection to lightbox image specifically
-            lightboxImg.addEventListener('contextmenu', e => e.preventDefault());
-            lightboxImg.style.pointerEvents = 'auto'; // overriding global img pointer-events:none so click doesn't fall through
-        });
-    </script>
-
+    <script src="lightbox.js"></script>
 </body>
 </html>
