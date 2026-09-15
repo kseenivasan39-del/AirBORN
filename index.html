@@ -1244,6 +1244,66 @@
             height: 16px;
         }
     </style>
+
+    <style>
+        .lightbox {
+            display: flex;
+            visibility: hidden;
+            opacity: 0;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .lightbox.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            transform: scale(0.95);
+            transition: transform 0.4s ease;
+            pointer-events: auto !important; /* allow right click prevention if needed, but keeping it un-draggable */
+        }
+        .lightbox.show .lightbox-content {
+            transform: scale(1);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .lightbox-close:hover {
+            color: #d82b27;
+        }
+        .lightbox-caption {
+            margin-top: 20px;
+            color: #ccc;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+        }
+        .gallery-item {
+            cursor: pointer;
+        }
+    </style>
+
 </head>
 <body>
     <nav class="navbar">
@@ -2073,5 +2133,45 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lightbox = document.createElement('div');
+            lightbox.id = 'lightbox';
+            lightbox.className = 'lightbox';
+            lightbox.innerHTML = `
+                <span class="lightbox-close">&times;</span>
+                <img class="lightbox-content" id="lightbox-img">
+                <div id="lightbox-caption" class="lightbox-caption"></div>
+            `;
+            document.body.appendChild(lightbox);
+
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const img = item.querySelector('img');
+                    const caption = item.querySelector('.gallery-caption');
+                    if (img) {
+                        lightboxImg.src = img.src;
+                        lightboxCaption.textContent = caption ? caption.textContent : '';
+                        lightbox.classList.add('show');
+                    }
+                });
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target !== lightboxImg) {
+                    lightbox.classList.remove('show');
+                }
+            });
+            
+            // Re-apply right-click protection to lightbox image specifically
+            lightboxImg.addEventListener('contextmenu', e => e.preventDefault());
+            lightboxImg.style.pointerEvents = 'auto'; // overriding global img pointer-events:none so click doesn't fall through
+        });
+    </script>
+
 </body>
 </html>
