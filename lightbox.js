@@ -1,7 +1,11 @@
 const lightbox = document.createElement('div');
 lightbox.id = 'lightbox';
 lightbox.className = 'lightbox';
-lightbox.innerHTML = '<span class=""lightbox-close"">&times;</span><img class=""lightbox-content"" id=""lightbox-img""><div id=""lightbox-caption"" class=""lightbox-caption""></div>';
+lightbox.innerHTML = `
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+    <div id="lightbox-caption" class="lightbox-caption"></div>
+`;
 document.body.appendChild(lightbox);
 
 const lightboxImg = document.getElementById('lightbox-img');
@@ -26,5 +30,7 @@ lightbox.addEventListener('click', (e) => {
     }
 });
 
-lightboxImg.addEventListener('contextmenu', e => e.preventDefault());
-lightboxImg.style.pointerEvents = 'auto';
+if (lightboxImg) {
+    lightboxImg.addEventListener('contextmenu', e => e.preventDefault());
+    lightboxImg.style.pointerEvents = 'auto';
+}
