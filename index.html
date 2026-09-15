@@ -484,6 +484,22 @@
             align-items: center;
         }
 
+        .gallery-item-hidden {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .gallery-item-hidden.show {
+            display: flex;
+            opacity: 1;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
         .gallery-item img {
             width: 100%;
             border-radius: 8px;
@@ -1840,6 +1856,21 @@
         
         // Prevent right-clicking anywhere on the page to protect assets
         document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // View All gallery button functionality
+        document.querySelector('.btn-view-all').addEventListener('click', function(e) {
+            e.preventDefault();
+            const hiddenItems = document.querySelectorAll('.gallery-item-hidden');
+            let isShowing = hiddenItems[0].classList.contains('show');
+            
+            if (!isShowing) {
+                hiddenItems.forEach(item => item.classList.add('show'));
+                this.textContent = 'VIEW LESS';
+            } else {
+                hiddenItems.forEach(item => item.classList.remove('show'));
+                this.textContent = 'VIEW ALL';
+            }
+        });
     </script>
 
     <div class="process-section">
@@ -1924,6 +1955,14 @@
                 <div class="gallery-item">
                     <img src="assets/gallery/img_6.jpg" alt="Recovery">
                     <div class="gallery-caption">RECOVERY</div>
+                </div>
+                <div class="gallery-item gallery-item-hidden">
+                    <img src="assets/gallery/img_7.jpg" alt="Wind Tunnel Tests">
+                    <div class="gallery-caption">AERO TESTING</div>
+                </div>
+                <div class="gallery-item gallery-item-hidden">
+                    <img src="assets/gallery/img_8.jpg" alt="Flight Results">
+                    <div class="gallery-caption">FLIGHT DATA</div>
                 </div>
             </div>
         </div>
