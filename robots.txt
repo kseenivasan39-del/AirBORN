@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://air-born.vercel.app/sitemap.xml
