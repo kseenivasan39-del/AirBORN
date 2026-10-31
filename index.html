@@ -9,6 +9,10 @@
     <meta name="author" content="AirBORN Team">
     <meta name="google-site-verification" content="JUbLCSyEYaeFbrahUVh-QypAznKHGgR5DDDLzR6n-dk">
     <meta name="robots" content="index, follow">
+        <!-- Security Hardening Headers (Meta Fallback) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="canonical" href="https://air-born.vercel.app/">
 
     <!-- Schema.org Structured Data (Google Knowledge Panel & Sitelinks) -->
@@ -733,6 +737,8 @@
             height: 100vh;
             object-fit: cover;
             transform-origin: left center;
+            will-change: transform;
+            contain: strict;
         }
 
         .content {
@@ -3100,12 +3106,47 @@
             `assets/frames/frame_${(index + 1).toString().padStart(4, '0')}.jpg`
         )
 
-        // Preload images to ensure smooth scrolling
+        // Progressive prioritized frame preloading to prevent network congestion
         const images = [];
         const preloadImages = () => {
-            for (let i = 0; i < frameCount; i++) {
+            // Step 1: Preload the first critical frames immediately
+            const initialBatch = Math.min(20, frameCount);
+            for (let i = 0; i < initialBatch; i++) {
                 images[i] = new Image();
                 images[i].src = currentFrame(i);
+            }
+
+            // Step 2: Background idle-load the remaining frames in chunks
+            const loadRemaining = () => {
+                let currentIdx = initialBatch;
+                const loadChunk = () => {
+                    const nextBatch = Math.min(currentIdx + 15, frameCount);
+                    for (let i = currentIdx; i < nextBatch; i++) {
+                        if (!images[i]) {
+                            images[i] = new Image();
+                            images[i].src = currentFrame(i);
+                        }
+                    }
+                    currentIdx = nextBatch;
+                    if (currentIdx < frameCount) {
+                        if ('requestIdleCallback' in window) {
+                            requestIdleCallback(loadChunk, { timeout: 1000 });
+                        } else {
+                            setTimeout(loadChunk, 100);
+                        }
+                    }
+                };
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(loadChunk, { timeout: 1000 });
+                } else {
+                    setTimeout(loadChunk, 100);
+                }
+            };
+
+            if (document.readyState === 'complete') {
+                loadRemaining();
+            } else {
+                window.addEventListener('load', loadRemaining, { once: true });
             }
         };
 
@@ -3337,24 +3378,33 @@
         const tiltCards = document.querySelectorAll('.tilt-card');
         
         tiltCards.forEach(card => {
+            let tiltTicking = false;
+            let targetTransform = '';
+
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                // Tilt angle calculation (max 12 degrees)
-                const rotateX = ((y - centerY) / centerY) * -10;
-                const rotateY = ((x - centerX) / centerX) * 10;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
-            });
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+                targetTransform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-3px)`;
+
+                if (!tiltTicking) {
+                    tiltTicking = true;
+                    requestAnimationFrame(() => {
+                        card.style.transform = targetTransform;
+                        tiltTicking = false;
+                    });
+                }
+            }, { passive: true });
 
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
-            });
+                targetTransform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+                card.style.transform = targetTransform;
+            }, { passive: true });
         });
 
         // ----------------------------------------------------
@@ -3558,10 +3608,16 @@
                     if (images[frameIndex] && images[frameIndex].complete) {
                         context.drawImage(images[frameIndex], 0, 0);
                     }
+                    
+                    if (typeof updateScrollspy === 'function') {
+                        updateScrollspy();
+                    }
+                    if (typeof syncStageDockWithScroll === 'function') {
+                        syncStageDockWithScroll(scrollTop);
+                    }
                     isTicking = false;
                 });
                 isTicking = true;
-            syncStageDockWithScroll(scrollTop);
             }
         }, { passive: true });
         
@@ -3639,7 +3695,7 @@
             });
         };
 
-        window.addEventListener('scroll', updateScrollspy, { passive: true });
+        // Initial call on mount
         updateScrollspy();
 
         // ----------------------------------------------------
@@ -3906,7 +3962,7 @@
                 <div class="footer-nav-title">REPOSITORY</div>
                 <a href="https://github.com/kseenivasan39-del/AirBORN" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Source Code</a>
                 <a href="https://github.com/kseenivasan39-del/AirBORN/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="footer-link">Technical Documentation</a>
-                <a href="https://air-born.vercel.app/sitemap.xml" target="_blank" class="footer-link">XML Sitemap</a>
+                <a href="https://air-born.vercel.app/sitemap.xml" target="_blank" rel="noopener noreferrer" class="footer-link">XML Sitemap</a>
                 <a href="gallery.html" class="footer-link">KiCad Igniter Board</a>
             </div>
         </div>
