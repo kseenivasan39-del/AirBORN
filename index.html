@@ -86,6 +86,94 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Trajectory Interactive Flight Graph Card */
+        .trajectory-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 35px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .trajectory-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 25px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .trajectory-badge {
+            color: #d82b27;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 6px;
+        }
+
+        .trajectory-title {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+        }
+
+        .trajectory-telemetry-readout {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        .readout-label {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .readout-val {
+            color: #ff5252;
+            font-size: 12.5px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', 'Rajdhani', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .trajectory-svg-container {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .trajectory-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .graph-node {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .graph-node:hover circle {
+            r: 8;
+            stroke-width: 3.5;
+            filter: drop-shadow(0 0 8px #d82b27);
+        }
+
         /* Sound FX Toggle Button */
         .sound-toggle-btn {
             background: rgba(255, 255, 255, 0.05);
@@ -2172,6 +2260,91 @@
                     <p class="timeline-desc">Parachute deploys,<br>safe descent and recovery</p>
                 </div>
             </div>
+
+            <!-- Interactive Simulated Flight Trajectory Curve -->
+            <div class="trajectory-card">
+                <div class="trajectory-header">
+                    <div>
+                        <div class="trajectory-badge">SIMULATION TELEMETRY</div>
+                        <h3 class="trajectory-title">FLIGHT TRAJECTORY (ALTITUDE VS TIME)</h3>
+                    </div>
+                    <div class="trajectory-telemetry-readout" id="trajectory-readout">
+                        <span class="readout-label">TELEMETRY PROBE:</span>
+                        <span class="readout-val" id="readout-val">Hover curve to inspect</span>
+                    </div>
+                </div>
+                
+                <div class="trajectory-svg-container">
+                    <svg viewBox="0 0 900 320" class="trajectory-svg" id="trajectory-svg">
+                        <defs>
+                            <linearGradient id="trajGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#d82b27" stop-opacity="0.45" />
+                                <stop offset="50%" stop-color="#d82b27" stop-opacity="0.12" />
+                                <stop offset="100%" stop-color="#d82b27" stop-opacity="0.0" />
+                            </linearGradient>
+                            <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="3" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+
+                        <!-- Grid Lines -->
+                        <line x1="60" y1="40" x2="860" y2="40" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4" />
+                        <line x1="60" y1="105" x2="860" y2="105" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4" />
+                        <line x1="60" y1="170" x2="860" y2="170" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4" />
+                        <line x1="60" y1="235" x2="860" y2="235" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4" />
+                        <line x1="60" y1="280" x2="860" y2="280" stroke="rgba(255,255,255,0.15)" />
+
+                        <!-- Y Axis Labels -->
+                        <text x="50" y="45" fill="rgba(255,255,255,0.4)" font-size="11" font-family="'JetBrains Mono', monospace" text-anchor="end">625m</text>
+                        <text x="50" y="110" fill="rgba(255,255,255,0.4)" font-size="11" font-family="'JetBrains Mono', monospace" text-anchor="end">450m</text>
+                        <text x="50" y="175" fill="rgba(255,255,255,0.4)" font-size="11" font-family="'JetBrains Mono', monospace" text-anchor="end">300m</text>
+                        <text x="50" y="240" fill="rgba(255,255,255,0.4)" font-size="11" font-family="'JetBrains Mono', monospace" text-anchor="end">150m</text>
+                        <text x="50" y="285" fill="rgba(255,255,255,0.4)" font-size="11" font-family="'JetBrains Mono', monospace" text-anchor="end">0m</text>
+
+                        <!-- Area Fill Under Curve -->
+                        <path d="M 60 280 C 100 270, 160 220, 240 130 C 320 60, 420 40, 500 40 C 580 40, 680 180, 860 280 L 860 280 L 60 280 Z" fill="url(#trajGradient)" />
+
+                        <!-- Trajectory Curve -->
+                        <path d="M 60 280 C 100 270, 160 220, 240 130 C 320 60, 420 40, 500 40 C 580 40, 680 180, 860 280" fill="none" stroke="#d82b27" stroke-width="3" filter="url(#neonGlow)" class="flight-curve" />
+
+                        <!-- Key Event Anchor Nodes -->
+                        <!-- 1. Liftoff -->
+                        <g class="graph-node" data-info="LIFTOFF @ 0.2s | V = 18 m/s | Alt = 1.8 m">
+                            <circle cx="85" cy="275" r="5" fill="#fff" stroke="#d82b27" stroke-width="2.5" />
+                            <text x="85" y="305" fill="#aaa" font-size="10.5" font-family="'Space Grotesk', sans-serif" text-anchor="middle">LIFTOFF</text>
+                        </g>
+
+                        <!-- 2. Burnout / Max Velocity -->
+                        <g class="graph-node" data-info="BURNOUT @ 1.8s | V_max = 175 m/s (Mach 0.51) | Alt = 145 m">
+                            <circle cx="240" cy="130" r="5" fill="#fff" stroke="#d82b27" stroke-width="2.5" />
+                            <text x="240" y="305" fill="#aaa" font-size="10.5" font-family="'Space Grotesk', sans-serif" text-anchor="middle">BURNOUT (175m/s)</text>
+                        </g>
+
+                        <!-- 3. Apogee -->
+                        <g class="graph-node" data-info="APOGEE @ 6.7s | Peak Alt = 625 m (2,050 ft) | V = 0 m/s">
+                            <circle cx="500" cy="40" r="7" fill="#d82b27" stroke="#fff" stroke-width="2.5" />
+                            <text x="500" y="24" fill="#ff5252" font-size="11.5" font-weight="700" font-family="'Space Grotesk', sans-serif" text-anchor="middle">APOGEE: 625m</text>
+                            <text x="500" y="305" fill="#aaa" font-size="10.5" font-family="'Space Grotesk', sans-serif" text-anchor="middle">APOGEE (6.7s)</text>
+                        </g>
+
+                        <!-- 4. Ejection & Touchdown -->
+                        <g class="graph-node" data-info="DESCENT @ 7.0s+ | Parachute Deployed | Descent V = 6.8 m/s">
+                            <circle cx="640" cy="140" r="5" fill="#fff" stroke="#d82b27" stroke-width="2.5" />
+                            <text x="640" y="305" fill="#aaa" font-size="10.5" font-family="'Space Grotesk', sans-serif" text-anchor="middle">CHUTE DEPLOY</text>
+                        </g>
+
+                        <g class="graph-node" data-info="TOUCHDOWN @ 65s | Safe Recovery | Landing V = 6.8 m/s">
+                            <circle cx="860" cy="280" r="5" fill="#fff" stroke="#d82b27" stroke-width="2.5" />
+                            <text x="860" y="305" fill="#aaa" font-size="10.5" font-family="'Space Grotesk', sans-serif" text-anchor="middle">TOUCHDOWN</text>
+                        </g>
+
+                        <!-- Dynamic Interactive Crosshair Cursor -->
+                        <line id="crosshair-x" x1="0" y1="40" x2="0" y2="280" stroke="rgba(255,255,255,0.4)" stroke-dasharray="3" style="display: none;" />
+                        <circle id="crosshair-dot" cx="0" cy="0" r="6" fill="#ff5252" stroke="#fff" stroke-width="2" style="display: none;" />
+                    </svg>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -2214,6 +2387,34 @@
 
         // Scrub through frames on scroll with smart navbar & rAF throttling
         let isTicking = false;
+
+        // ----------------------------------------------------
+        // Interactive Flight Trajectory Curve Telemetry Probe
+        // ----------------------------------------------------
+        const trajSvg = document.getElementById('trajectory-svg');
+        const readoutVal = document.getElementById('readout-val');
+        const graphNodes = document.querySelectorAll('.graph-node');
+
+        graphNodes.forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                const info = node.getAttribute('data-info');
+                if (readoutVal && info) {
+                    readoutVal.textContent = info;
+                    readoutVal.style.color = '#ff5252';
+                }
+                if (typeof playCockpitTone === 'function') {
+                    playCockpitTone(900, 1400, 'sine', 0.05, 0.03);
+                }
+            });
+
+            node.addEventListener('mouseleave', () => {
+                if (readoutVal) {
+                    readoutVal.textContent = 'Hover node to inspect metrics';
+                    readoutVal.style.color = 'rgba(255,255,255,0.7)';
+                }
+            });
+        });
+
 
         // ----------------------------------------------------
         // Premium 3D Dynamic Mouse-Tilt Physics Engine
