@@ -21,6 +21,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Custom Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d82b27;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -1413,31 +1428,27 @@
         
         <div class="footer-links">
             <div class="footer-col">
-                <div class="footer-nav-title">COMPANY</div>
-                <a href="#" class="footer-link">About Us</a>
-                <a href="#" class="footer-link">Our Team</a>
-                <a href="#" class="footer-link">Careers</a>
+                <div class="footer-nav-title">EXPLORE</div>
+                <a href="index.html#about-section" class="footer-link">Vehicle Architecture</a>
+                <a href="index.html#technology-section" class="footer-link">Flight Telemetry</a>
+                <a href="index.html#mission-section" class="footer-link">Mission MK-1</a>
+                <a href="gallery.html" class="footer-link">Schematics & Gallery</a>
             </div>
             
             <div class="footer-col">
-                <div class="footer-nav-title">TECHNOLOGY</div>
-                <a href="#" class="footer-link">Our Process</a>
-                <a href="#" class="footer-link">Design</a>
-                <a href="#" class="footer-link">Materials</a>
+                <div class="footer-nav-title">SPECIFICATIONS</div>
+                <a href="index.html#architecture-section" class="footer-link">Tangent Ogive Nose Cone</a>
+                <a href="index.html#architecture-section" class="footer-link">Airframe & 3-Fin Array</a>
+                <a href="index.html#technology-section" class="footer-link">Class G Motor Propulsion</a>
+                <a href="index.html#technology-section" class="footer-link">Dual-Stage Recovery</a>
             </div>
             
             <div class="footer-col">
-                <div class="footer-nav-title">PROJECTS</div>
-                <a href="#" class="footer-link">MK-1</a>
-                <a href="#" class="footer-link">Missions</a>
-                <a href="#" class="footer-link">Development</a>
-            </div>
-            
-            <div class="footer-col">
-                <div class="footer-nav-title">RESOURCES</div>
-                <a href="#" class="footer-link">News</a>
-                <a href="#" class="footer-link">Media Kit</a>
-                <a href="#" class="footer-link">Documentation</a>
+                <div class="footer-nav-title">REPOSITORY</div>
+                <a href="https://github.com/kseenivasan39-del/AirBORN" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Source Code</a>
+                <a href="https://github.com/kseenivasan39-del/AirBORN/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="footer-link">Technical Documentation</a>
+                <a href="https://air-born.vercel.app/sitemap.xml" target="_blank" class="footer-link">XML Sitemap</a>
+                <a href="gallery.html" class="footer-link">KiCad Igniter Board</a>
             </div>
         </div>
         
