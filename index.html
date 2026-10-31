@@ -2102,7 +2102,175 @@
             }
         }
 
-    </style>
+    
+        /* ====================================================
+           PREMIUM POLISH: Option 1, Option 3 & Option 4
+           ==================================================== */
+        
+        /* 1. Active Navigation Scrollspy & Pill Indicator */
+        .nav-links li a {
+            position: relative;
+            transition: color 0.25s ease, background-color 0.25s ease;
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+
+        .nav-links li a.active {
+            color: #ffffff !important;
+            background: rgba(216, 43, 39, 0.15);
+            border: 1px solid rgba(216, 43, 39, 0.4);
+            text-shadow: 0 0 10px rgba(216, 43, 39, 0.6);
+        }
+
+        .nav-links li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 2px;
+            background: #d82b27;
+            border-radius: 2px;
+            box-shadow: 0 0 8px #ff1744;
+        }
+
+        /* 3. Glassmorphic Smooth Hover Shimmer Light-Sweep */
+        .btn-primary, .btn-secondary, .btn-spec-download, .perf-card, .sim-calculator-card, .trajectory-card, .team-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after, .btn-secondary::after, .btn-spec-download::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -120%;
+            width: 80%;
+            height: 200%;
+            background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.25) 50%, transparent 80%);
+            transform: rotate(25deg);
+            pointer-events: none;
+            transition: none;
+        }
+
+        .btn-primary:hover::after, .btn-secondary:hover::after, .btn-spec-download:hover::after {
+            left: 140%;
+            transition: left 0.75s ease-in-out;
+        }
+
+        .perf-card::before, .sim-calculator-card::before, .trajectory-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 70%;
+            height: 200%;
+            background: linear-gradient(115deg, transparent 20%, rgba(216, 43, 39, 0.08) 50%, rgba(255, 255, 255, 0.06) 52%, transparent 80%);
+            transform: rotate(25deg);
+            pointer-events: none;
+            z-index: 3;
+            transition: none;
+        }
+
+        .perf-card:hover::before, .sim-calculator-card:hover::before, .trajectory-card:hover::before {
+            left: 180%;
+            transition: left 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* 4. Interactive Rocket 3D Exploded View Step Controller Dock */
+        .stage-controller-dock {
+            position: fixed;
+            bottom: 26px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 998;
+            display: inline-flex;
+            align-items: center;
+            background: rgba(10, 11, 14, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 5px 8px;
+            border-radius: 30px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(216, 43, 39, 0.15);
+            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .stage-controller-dock.active-in-viewport {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .stage-dock-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            color: #d82b27;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            padding: 0 10px 0 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stage-dock-beacon {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff1744;
+            box-shadow: 0 0 8px #ff1744;
+            animation: pulseDot 1.6s infinite ease-in-out;
+        }
+
+        .stage-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 6px;
+        }
+
+        .stage-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .stage-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .stage-btn.active {
+            color: #ffffff;
+            background: #d82b27;
+            border-color: #ff5252;
+            box-shadow: 0 0 12px rgba(216, 43, 39, 0.6);
+        }
+
+        @media (max-width: 900px) {
+            .stage-controller-dock {
+                display: none !important;
+            }
+        }
+
+</style>
 
     <style>
         .lightbox {
@@ -2241,6 +2409,21 @@
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
     </button>
+
+    
+    <!-- Aerospace 3D Exploded View Step Controller Dock (Option 4) -->
+    <div class="stage-controller-dock" id="stage-dock" role="navigation" aria-label="Rocket 3D Explosion Stage Scrubber">
+        <div class="stage-dock-label">
+            <span class="stage-dock-beacon"></span>
+            <span>3D SCRUB</span>
+        </div>
+        <div class="stage-btn-group">
+            <button class="stage-btn active" data-frame="0" data-stage="launch" title="Intact launch vehicle">INTACT</button>
+            <button class="stage-btn" data-frame="42" data-stage="nosecone" title="Nose cone and payload separation">NOSE CONE</button>
+            <button class="stage-btn" data-frame="95" data-stage="recovery" title="Avionics bay and parachute recovery shock cord">RECOVERY BAY</button>
+            <button class="stage-btn" data-frame="147" data-stage="propulsion" title="Motor casing, KNSB propellant grain and 3-fin array">PROPULSION & FINS</button>
+        </div>
+    </div>
 
     <div class="content" id="about-section">
         <div class="section">
@@ -3378,6 +3561,7 @@
                     isTicking = false;
                 });
                 isTicking = true;
+            syncStageDockWithScroll(scrollTop);
             }
         }, { passive: true });
         
@@ -3406,6 +3590,132 @@
         
         // Prevent right-clicking anywhere on the page to protect assets
         document.addEventListener('contextmenu', event => event.preventDefault());
+    
+        // ----------------------------------------------------
+        // Premium Option 1: Active Navigation Scrollspy Engine
+        // ----------------------------------------------------
+        const navAnchorLinks = document.querySelectorAll('.nav-links li a[href^="#"], .nav-links li a[href="index.html"]');
+        const spySections = [
+            { id: 'about-section', link: 'index.html' },
+            { id: 'about-section', link: '#about-section' },
+            { id: 'technology-section', link: '#technology-section' },
+            { id: 'mission-section', link: '#mission-section' },
+            { id: 'team-section', link: '#team-section' },
+            { id: 'contact-section', link: '#contact-section' }
+        ];
+
+        const updateScrollspy = () => {
+            const scrollPos = window.scrollY + 180;
+            let currentSectionId = '';
+
+            // Check sections from bottom to top
+            const sectionElements = [
+                document.getElementById('contact-section'),
+                document.getElementById('team-section'),
+                document.getElementById('mission-section'),
+                document.getElementById('technology-section'),
+                document.getElementById('about-section')
+            ];
+
+            for (const sec of sectionElements) {
+                if (sec && scrollPos >= sec.offsetTop) {
+                    currentSectionId = sec.id;
+                    break;
+                }
+            }
+
+            if (!currentSectionId && window.scrollY < 400) {
+                currentSectionId = 'about-section';
+            }
+
+            navAnchorLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if ((currentSectionId === 'about-section' && (href === 'index.html' || href === '#about-section')) ||
+                    (href === `#${currentSectionId}`)) {
+                    link.classList.add('active');
+                } else if (href.startsWith('#') || href === 'index.html') {
+                    link.classList.remove('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', updateScrollspy, { passive: true });
+        updateScrollspy();
+
+        // ----------------------------------------------------
+        // Premium Option 4: 3D Explosion Scrubber Dock Controller
+        // ----------------------------------------------------
+        const stageDock = document.getElementById('stage-dock');
+        const stageBtns = document.querySelectorAll('.stage-btn');
+        const scrollPill = document.getElementById('scroll-pill');
+
+        // Target scroll positions for frames:
+        // Frame 0: scrollY ~ 0
+        // Frame 42: scrollY ~ (42/147) * 0.75 * (innerHeight * 4)
+        // Frame 95: scrollY ~ (95/147) * 0.75 * (innerHeight * 4)
+        // Frame 147: scrollY ~ 1.0 * 0.75 * (innerHeight * 4) = (innerHeight * 3)
+
+        const getScrollForFrame = (frameNum) => {
+            const maxScrollTop = window.innerHeight * 4;
+            const adjustedFraction = frameNum / (frameCount - 1);
+            const scrollFraction = adjustedFraction * 0.75;
+            return scrollFraction * maxScrollTop;
+        };
+
+        stageBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const frameTarget = parseInt(btn.getAttribute('data-frame'), 10);
+                const targetScrollY = getScrollForFrame(frameTarget);
+
+                stageBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                if (typeof playCockpitTone === 'function') {
+                    playCockpitTone(700, 1100, 'triangle', 0.08, 0.05);
+                }
+
+                window.scrollTo({
+                    top: targetScrollY,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Sync stage dock active button with scroll position
+        const syncStageDockWithScroll = (scrollTop) => {
+            if (!stageDock) return;
+            const maxExplosionScroll = window.innerHeight * 3.4;
+
+            // Only show dock while user is in the interactive rocket animation zone
+            if (scrollTop > 120 && scrollTop < maxExplosionScroll) {
+                stageDock.classList.add('active-in-viewport');
+                if (scrollPill) scrollPill.style.display = 'none';
+            } else {
+                stageDock.classList.remove('active-in-viewport');
+                if (scrollPill && scrollTop <= 120) scrollPill.style.display = 'flex';
+            }
+
+            const maxScrollTop = window.innerHeight * 4;
+            const scrollFraction = Math.min(1, Math.max(0, scrollTop / maxScrollTop));
+            const adjustedFraction = Math.min(1, scrollFraction / 0.75);
+            const currentFrameIdx = Math.min(
+                frameCount - 1,
+                Math.floor(adjustedFraction * frameCount)
+            );
+
+            // Determine active stage button
+            let activeIdx = 0;
+            if (currentFrameIdx >= 120) activeIdx = 3;
+            else if (currentFrameIdx >= 70) activeIdx = 2;
+            else if (currentFrameIdx >= 25) activeIdx = 1;
+            else activeIdx = 0;
+
+            stageBtns.forEach((b, idx) => {
+                if (idx === activeIdx) b.classList.add('active');
+                else b.classList.remove('active');
+            });
+        };
+
     </script>
 
     <div class="process-section">
