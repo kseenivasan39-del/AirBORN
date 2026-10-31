@@ -59,6 +59,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             margin: 0;
             padding: 0;
@@ -1370,15 +1373,15 @@
             </svg>
         </a>
         <ul class="nav-links">
-            <li><a href="#" class="active">HOME</a></li>
-            <li><a href="#">ABOUT US</a></li>
-            <li><a href="#">TECHNOLOGY</a></li>
-            <li><a href="#">MISSIONS</a></li>
-            <li><a href="#">GALLERY</a></li>
-            <li><a href="#">NEWS</a></li>
-            <li><a href="#">CONTACT</a></li>
+            <li><a href="index.html" class="active">HOME</a></li>
+            <li><a href="#about-section">ABOUT</a></li>
+            <li><a href="#technology-section">SPECS</a></li>
+            <li><a href="#mission-section">MISSION</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="#team-section">TEAM</a></li>
+            <li><a href="#contact-section">CONTACT</a></li>
         </ul>
-        <a href="#" class="explore-btn">
+        <a href="gallery.html" class="explore-btn">
             EXPLORE MORE 
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
@@ -1390,7 +1393,7 @@
         <canvas id="hero-lightpass"></canvas>
     </div>
 
-    <div class="content">
+    <div class="content" id="about-section">
         <div class="section">
             <div class="hero-subtitle">Student Rocket Project &bull; Rise. Explore. Inspire.</div>
             <h1 class="hero-title">
@@ -1400,14 +1403,14 @@
             </h1>
             <p class="hero-desc">AirBORN is an advanced student sounding rocket project engineered and built in India by student innovators.</p>
             <div class="hero-buttons">
-                <a href="#" class="btn-primary">
-                    OUR TECHNOLOGY 
+                <a href="#technology-section" class="btn-primary">
+                    FLIGHT TELEMETRY 
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </a>
-                <a href="#" class="btn-secondary">
-                    WATCH VIDEO 
+                <a href="gallery.html" class="btn-secondary">
+                    VIEW SCHEMATICS 
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
                         <path d="M10 8L16 12L10 16V8Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
@@ -1751,7 +1754,7 @@
     </div>
     
     <!-- Post-Scroll Final Section -->
-    <div class="final-section">
+    <div class="final-section" id="technology-section">
         <div class="perf-container">
             <h3 class="perf-subtitle">SIMULATED FLIGHT PERFORMANCE</h3>
             <h2 class="perf-title">REFERENCE MOTOR: CUSTOM SUGAR MOTOR (KNSB / KNSU G-CLASS)</h2>
@@ -2054,13 +2057,13 @@
         </div>
     </div> <!-- End process-section -->
 
-    <div class="mission-section">
+    <div class="mission-section" id="mission-section">
         <div class="mission-col col-1">
             <div class="mission-title">MISSION MK-1</div>
             <div class="mission-text">
-                Our sights are set high.<br>
-                The journey has begun,<br>
-                and the sky is not the limit.
+                Suborbital student sounding rocket.<br>
+                Class G solid propellant motor,<br>
+                dual-stage parachute recovery.
             </div>
         </div>
         
@@ -2094,11 +2097,11 @@
         </div>
     </div> <!-- End mission-section -->
 
-    <div class="team-section">
+    <div class="team-section" id="team-section">
         <div class="team-intro">
-            <div class="team-subtitle">THE TEAM</div>
-            <div class="team-title component-title">THE PEOPLE BEHIND AIRBORN</div>
-            <div class="team-desc">A passionate student rocketry team and aerospace engineering innovators building the future one launch at a time.</div>
+            <div class="team-subtitle">ENGINEERING DIVISIONS</div>
+            <div class="team-title component-title">SUBSYSTEM ARCHITECTURE</div>
+            <div class="team-desc">Specialized aerospace engineering sub-teams managing aerodynamics, solid motor propulsion, flight avionics, and active recovery.</div>
         </div>
         <div class="team-grid">
             <div class="team-item">
@@ -2128,7 +2131,7 @@
         </div>
     </div>
 
-    <footer class="footer-section">
+    <footer class="footer-section" id="contact-section">
         <div class="footer-brand">
             <img src="assets/airborn.png" alt="AirBORN" class="footer-logo">
             <div class="footer-tagline">RISE. EXPLORE. INSPIRE.</div>
@@ -2181,11 +2184,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
 
-    <script>
-
-    </script>
 
     <script src="lightbox.js"></script>
 </body>
