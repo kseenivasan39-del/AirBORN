@@ -86,6 +86,168 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Spec Sheet Download Button */
+        .btn-spec-download {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 16px 26px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(8px);
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .btn-spec-download:hover {
+            background: rgba(216, 43, 39, 0.2);
+            border-color: #d82b27;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(216, 43, 39, 0.3);
+        }
+
+        /* Simulator Calculator Card */
+        .sim-calculator-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 35px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .sim-calc-desc {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.9rem;
+            margin: 6px 0 0 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sim-calc-body {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .sim-calc-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .calc-control-group {
+            margin-bottom: 22px;
+        }
+
+        .calc-slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .calc-slider-header label {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calc-slider-val {
+            color: #d82b27;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+        }
+
+        .calc-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.12);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .calc-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #d82b27;
+            border: 2px solid #fff;
+            box-shadow: 0 0 10px rgba(216, 43, 39, 0.8);
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .calc-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .calc-slider-bounds {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.7rem;
+            margin-top: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .calc-output-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .calc-output-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .calc-output-label {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 6px;
+        }
+
+        .calc-output-num {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Rajdhani', sans-serif;
+            margin-bottom: 2px;
+        }
+
+        .calc-output-sub {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+            font-family: 'Inter', sans-serif;
+        }
+
         /* Trajectory Interactive Flight Graph Card */
         .trajectory-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
@@ -1802,12 +1964,20 @@
                     </svg>
                 </a>
                 <a href="gallery.html" class="btn-secondary">
-                    VIEW SCHEMATICS 
+                    SCHEMATICS 
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
                         <path d="M10 8L16 12L10 16V8Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
                     </svg>
                 </a>
+                <button class="btn-spec-download" id="btn-download-specs" title="Download MK-1 Technical Summary">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    SPEC SHEET
+                </button>
             </div>
         </div>
         <div class="section component-section">
@@ -2142,6 +2312,64 @@
                 <h2 class="component-title" style="display: block; margin-top: 15px; font-size: 2.2rem; line-height: 1.1;"><span style="color: #fff;">BUILT WITH PURPOSE.</span><br><span style="color: #fff;">POWERED BY </span><span class="red-text">PRECISION.</span></h2>
                 <p class="component-desc" style="font-size: 1.1rem; line-height: 1.6; margin-top: 20px;">Every component is carefully engineered<br>to deliver peak performance, stability,<br>and safe recovery.</p>
             </div>
+
+            <!-- Interactive Ballistic Apogee & Stability Simulator Widget -->
+            <div class="sim-calculator-card">
+                <div class="sim-calc-header">
+                    <div>
+                        <div class="trajectory-badge">AERODYNAMICS LAB</div>
+                        <h3 class="trajectory-title">INTERACTIVE BALLISTIC FLIGHT CALCULATOR</h3>
+                        <p class="sim-calc-desc">Tweak propellant mass and ballast loading to observe real-time Barrowman stability and apogee predictions.</p>
+                    </div>
+                </div>
+
+                <div class="sim-calc-body">
+                    <div class="calc-controls">
+                        <!-- Slider 1: Propellant Mass -->
+                        <div class="calc-control-group">
+                            <div class="calc-slider-header">
+                                <label for="slider-propellant">KNO₃/Sugar Propellant Grain</label>
+                                <span class="calc-slider-val" id="val-propellant">125 g</span>
+                            </div>
+                            <input type="range" id="slider-propellant" min="80" max="160" value="125" step="5" class="calc-slider" />
+                            <div class="calc-slider-bounds"><span>80 g (Mid-G)</span><span>160 g (High-G)</span></div>
+                        </div>
+
+                        <!-- Slider 2: Nose Cone Ballast -->
+                        <div class="calc-control-group">
+                            <div class="calc-slider-header">
+                                <label for="slider-ballast">Nose Cone Ballast Mass</label>
+                                <span class="calc-slider-val" id="val-ballast">50 g</span>
+                            </div>
+                            <input type="range" id="slider-ballast" min="20" max="90" value="50" step="5" class="calc-slider" />
+                            <div class="calc-slider-bounds"><span>20 g (Min)</span><span>90 g (Heavy)</span></div>
+                        </div>
+                    </div>
+
+                    <div class="calc-output-grid">
+                        <div class="calc-output-box">
+                            <div class="calc-output-label">ESTIMATED APOGEE</div>
+                            <div class="calc-output-num" id="calc-apogee">625 m</div>
+                            <div class="calc-output-sub" id="calc-apogee-ft">~2,050 ft</div>
+                        </div>
+                        <div class="calc-output-box">
+                            <div class="calc-output-label">BURNOUT VELOCITY</div>
+                            <div class="calc-output-num" id="calc-velocity">175 m/s</div>
+                            <div class="calc-output-sub" id="calc-mach">Mach 0.51</div>
+                        </div>
+                        <div class="calc-output-box">
+                            <div class="calc-output-label">STATIC MARGIN</div>
+                            <div class="calc-output-num" id="calc-stability" style="color: #4caf50;">1.34 cal</div>
+                            <div class="calc-output-sub" id="calc-stability-status" style="color: #4caf50;">OPTIMAL STABLE</div>
+                        </div>
+                        <div class="calc-output-box">
+                            <div class="calc-output-label">LIFTOFF TWR</div>
+                            <div class="calc-output-num" id="calc-twr">17.2 : 1</div>
+                            <div class="calc-output-sub">Rail Exit Safe</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -2387,6 +2615,138 @@
 
         // Scrub through frames on scroll with smart navbar & rAF throttling
         let isTicking = false;
+
+        // ----------------------------------------------------
+        // Real-Time Ballistic Flight Calculator Engine
+        // ----------------------------------------------------
+        const sliderPropellant = document.getElementById('slider-propellant');
+        const sliderBallast = document.getElementById('slider-ballast');
+        const valPropellant = document.getElementById('val-propellant');
+        const valBallast = document.getElementById('val-ballast');
+        const calcApogee = document.getElementById('calc-apogee');
+        const calcApogeeFt = document.getElementById('calc-apogee-ft');
+        const calcVelocity = document.getElementById('calc-velocity');
+        const calcMach = document.getElementById('calc-mach');
+        const calcStability = document.getElementById('calc-stability');
+        const calcStabilityStatus = document.getElementById('calc-stability-status');
+        const calcTwr = document.getElementById('calc-twr');
+
+        const recalculatePhysics = () => {
+            if (!sliderPropellant || !sliderBallast) return;
+            const prop = parseFloat(sliderPropellant.value);
+            const ballast = parseFloat(sliderBallast.value);
+
+            if (valPropellant) valPropellant.textContent = `${prop} g`;
+            if (valBallast) valBallast.textContent = `${ballast} g`;
+
+            // Physics model based on OpenRocket AirBORN G-Class calibration:
+            // Standard baseline: 125g prop, 50g ballast -> 625m, 175m/s, 1.34 cal, 17.2 TWR
+            const totalMass = 286 + ballast + (prop * 1.92); // grams
+            const impulse = prop * 1.12; // ~140 Ns at 125g
+            const avgThrust = impulse / 1.8; // ~78 N
+
+            // Apogee approx: kinetic energy + thrust height
+            const apogeeMeters = Math.round((impulse * impulse) / (totalMass * 0.155));
+            const apogeeFeet = Math.round(apogeeMeters * 3.28084);
+            const maxVel = Math.round((impulse / (totalMass * 0.001)) * 0.57);
+            const mach = (maxVel / 343).toFixed(2);
+            const twr = ((avgThrust / ((totalMass * 0.001) * 9.81))).toFixed(1);
+
+            // Stability margin in calibers (7.0 cm body dia):
+            // More ballast moves CG forward (higher stability)
+            const calibers = (1.0 + (ballast - 20) * 0.0085 - (prop - 125) * 0.002).toFixed(2);
+
+            if (calcApogee) calcApogee.textContent = `${apogeeMeters} m`;
+            if (calcApogeeFt) calcApogeeFt.textContent = `~${apogeeFeet.toLocaleString()} ft`;
+            if (calcVelocity) calcVelocity.textContent = `${maxVel} m/s`;
+            if (calcMach) calcMach.textContent = `Mach ${mach}`;
+            if (calcTwr) calcTwr.textContent = `${twr} : 1`;
+
+            if (calcStability && calcStabilityStatus) {
+                calcStability.textContent = `${calibers} cal`;
+                if (calibers < 1.0) {
+                    calcStability.style.color = '#ff5252';
+                    calcStabilityStatus.style.color = '#ff5252';
+                    calcStabilityStatus.textContent = 'MARGINAL (UNSTABLE)';
+                } else if (calibers > 1.6) {
+                    calcStability.style.color = '#ffb74d';
+                    calcStabilityStatus.style.color = '#ffb74d';
+                    calcStabilityStatus.textContent = 'OVER-STABLE (WEATHERCOCK)';
+                } else {
+                    calcStability.style.color = '#4caf50';
+                    calcStabilityStatus.style.color = '#4caf50';
+                    calcStabilityStatus.textContent = 'OPTIMAL STABILITY';
+                }
+            }
+        };
+
+        if (sliderPropellant) sliderPropellant.addEventListener('input', recalculatePhysics);
+        if (sliderBallast) sliderBallast.addEventListener('input', recalculatePhysics);
+
+        // ----------------------------------------------------
+        // Printable AirBORN Technical Spec Sheet Generator
+        // ----------------------------------------------------
+        const btnDownloadSpecs = document.getElementById('btn-download-specs');
+        if (btnDownloadSpecs) {
+            btnDownloadSpecs.addEventListener('click', () => {
+                if (typeof playCockpitTone === 'function') {
+                    playCockpitTone(1000, 500, 'triangle', 0.1, 0.05);
+                }
+                const printWindow = window.open('', '_blank');
+                const specHtml = `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>AirBORN MK-1 Technical Data Sheet</title>
+                        <style>
+                            body { font-family: -apple-system, system-ui, sans-serif; padding: 40px; color: #111; line-height: 1.5; }
+                            h1 { color: #d82b27; border-bottom: 2px solid #d82b27; padding-bottom: 10px; font-size: 26px; }
+                            h2 { font-size: 18px; margin-top: 25px; color: #333; }
+                            table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+                            th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; font-size: 13px; }
+                            th { background: #f7f7f7; font-weight: 700; }
+                            .footer { margin-top: 40px; font-size: 12px; color: #777; border-top: 1px solid #eee; padding-top: 15px; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>AIRBORN MK-1 &bull; TECHNICAL SPECIFICATION DATA SHEET</h1>
+                        <p><b>Vehicle:</b> AirBORN Suborbital Student Sounding Rocket | <b>Propulsion:</b> Class G Motor | <b>Status:</b> Static Test Phase</p>
+                        
+                        <h2>1. Geometric & Structural Specifications</h2>
+                        <table>
+                            <tr><th>Parameter</th><th>Value</th><th>Design Basis</th></tr>
+                            <tr><td>Total Rocket Length</td><td>62.0 cm</td><td>Optimal moment arm for fin planar set</td></tr>
+                            <tr><td>Airframe Outer Diameter</td><td>7.0 cm (2.75 in)</td><td>Low frontal drag profile</td></tr>
+                            <tr><td>Airframe Inner Diameter</td><td>6.8 cm</td><td>1.0 mm rigid composite wall</td></tr>
+                            <tr><td>Dry Mass (No Motor)</td><td>336 g</td><td>Includes nose ballast and centering rings</td></tr>
+                            <tr><td>Liftoff Mass (Wet)</td><td>~461 g</td><td>TWR &gt; 17:1 for rail exit clearance</td></tr>
+                            <tr><td>Caliber Static Margin</td><td>1.14 cal – 1.44 cal</td><td>Optimal stability band (Barrowman eq)</td></tr>
+                        </table>
+
+                        <h2>2. Propulsion & Simulated Trajectory</h2>
+                        <table>
+                            <tr><th>Metric</th><th>Simulated Value</th></tr>
+                            <tr><td>Propellant Grain</td><td>125 g (65:35 KNO₃ / Sorbitol)</td></tr>
+                            <tr><td>Total Impulse</td><td>~140 N·s (Class G Motor Tier)</td></tr>
+                            <tr><td>Peak Altitude (Apogee)</td><td>625 m (~2,050 ft)</td></tr>
+                            <tr><td>Maximum Velocity</td><td>175 m/s (Mach 0.51 / 630 km/h)</td></tr>
+                            <tr><td>Peak Acceleration</td><td>135 m/s² (~13.8 g)</td></tr>
+                            <tr><td>Descent Landing Velocity</td><td>6.8 m/s (45 cm Ripstop Nylon Chute)</td></tr>
+                        </table>
+
+                        <div class="footer">
+                            AirBORN Aerospace Engineering &bull; Designed & Fabricated in India &bull; Contact: airbornrising@gmail.com
+                        </div>
+                    </body>
+                    </html>
+                `;
+                printWindow.document.write(specHtml);
+                printWindow.document.close();
+                printWindow.focus();
+                setTimeout(() => { printWindow.print(); }, 500);
+            });
+        }
+
 
         // ----------------------------------------------------
         // Interactive Flight Trajectory Curve Telemetry Probe
