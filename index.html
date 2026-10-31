@@ -2313,63 +2313,7 @@
                 <p class="component-desc" style="font-size: 1.1rem; line-height: 1.6; margin-top: 20px;">Every component is carefully engineered<br>to deliver peak performance, stability,<br>and safe recovery.</p>
             </div>
 
-            <!-- Interactive Ballistic Apogee & Stability Simulator Widget -->
-            <div class="sim-calculator-card">
-                <div class="sim-calc-header">
-                    <div>
-                        <div class="trajectory-badge">AERODYNAMICS LAB</div>
-                        <h3 class="trajectory-title">INTERACTIVE BALLISTIC FLIGHT CALCULATOR</h3>
-                        <p class="sim-calc-desc">Tweak propellant mass and ballast loading to observe real-time Barrowman stability and apogee predictions.</p>
-                    </div>
-                </div>
 
-                <div class="sim-calc-body">
-                    <div class="calc-controls">
-                        <!-- Slider 1: Propellant Mass -->
-                        <div class="calc-control-group">
-                            <div class="calc-slider-header">
-                                <label for="slider-propellant">KNO₃/Sugar Propellant Grain</label>
-                                <span class="calc-slider-val" id="val-propellant">125 g</span>
-                            </div>
-                            <input type="range" id="slider-propellant" min="80" max="160" value="125" step="5" class="calc-slider" />
-                            <div class="calc-slider-bounds"><span>80 g (Mid-G)</span><span>160 g (High-G)</span></div>
-                        </div>
-
-                        <!-- Slider 2: Nose Cone Ballast -->
-                        <div class="calc-control-group">
-                            <div class="calc-slider-header">
-                                <label for="slider-ballast">Nose Cone Ballast Mass</label>
-                                <span class="calc-slider-val" id="val-ballast">50 g</span>
-                            </div>
-                            <input type="range" id="slider-ballast" min="20" max="90" value="50" step="5" class="calc-slider" />
-                            <div class="calc-slider-bounds"><span>20 g (Min)</span><span>90 g (Heavy)</span></div>
-                        </div>
-                    </div>
-
-                    <div class="calc-output-grid">
-                        <div class="calc-output-box">
-                            <div class="calc-output-label">ESTIMATED APOGEE</div>
-                            <div class="calc-output-num" id="calc-apogee">625 m</div>
-                            <div class="calc-output-sub" id="calc-apogee-ft">~2,050 ft</div>
-                        </div>
-                        <div class="calc-output-box">
-                            <div class="calc-output-label">BURNOUT VELOCITY</div>
-                            <div class="calc-output-num" id="calc-velocity">175 m/s</div>
-                            <div class="calc-output-sub" id="calc-mach">Mach 0.51</div>
-                        </div>
-                        <div class="calc-output-box">
-                            <div class="calc-output-label">STATIC MARGIN</div>
-                            <div class="calc-output-num" id="calc-stability" style="color: #4caf50;">1.34 cal</div>
-                            <div class="calc-output-sub" id="calc-stability-status" style="color: #4caf50;">OPTIMAL STABLE</div>
-                        </div>
-                        <div class="calc-output-box">
-                            <div class="calc-output-label">LIFTOFF TWR</div>
-                            <div class="calc-output-num" id="calc-twr">17.2 : 1</div>
-                            <div class="calc-output-sub">Rail Exit Safe</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     
@@ -2571,6 +2515,64 @@
                         <line id="crosshair-x" x1="0" y1="40" x2="0" y2="280" stroke="rgba(255,255,255,0.4)" stroke-dasharray="3" style="display: none;" />
                         <circle id="crosshair-dot" cx="0" cy="0" r="6" fill="#ff5252" stroke="#fff" stroke-width="2" style="display: none;" />
                     </svg>
+                </div>
+            </div>
+
+            <!-- Interactive Ballistic Apogee & Stability Simulator Widget -->
+            <div class="sim-calculator-card">
+                <div class="sim-calc-header">
+                    <div>
+                        <div class="trajectory-badge">AERODYNAMICS LAB</div>
+                        <h3 class="trajectory-title">INTERACTIVE BALLISTIC FLIGHT CALCULATOR</h3>
+                        <p class="sim-calc-desc">Tweak propellant mass and ballast loading to observe real-time Barrowman stability and apogee predictions.</p>
+                    </div>
+                </div>
+
+                <div class="sim-calc-body">
+                    <div class="calc-controls">
+                        <!-- Slider 1: Propellant Mass -->
+                        <div class="calc-control-group">
+                            <div class="calc-slider-header">
+                                <label for="slider-propellant">KNO₃/Sugar Propellant Grain</label>
+                                <span class="calc-slider-val" id="val-propellant">125 g</span>
+                            </div>
+                            <input type="range" id="slider-propellant" min="80" max="160" value="125" step="5" class="calc-slider" />
+                            <div class="calc-slider-bounds"><span>80 g (Mid-G)</span><span>160 g (High-G)</span></div>
+                        </div>
+
+                        <!-- Slider 2: Nose Cone Ballast -->
+                        <div class="calc-control-group">
+                            <div class="calc-slider-header">
+                                <label for="slider-ballast">Nose Cone Ballast Mass</label>
+                                <span class="calc-slider-val" id="val-ballast">50 g</span>
+                            </div>
+                            <input type="range" id="slider-ballast" min="20" max="90" value="50" step="5" class="calc-slider" />
+                            <div class="calc-slider-bounds"><span>20 g (Min)</span><span>90 g (Heavy)</span></div>
+                        </div>
+                    </div>
+
+                    <div class="calc-output-grid">
+                        <div class="calc-output-box">
+                            <div class="calc-output-label">ESTIMATED APOGEE</div>
+                            <div class="calc-output-num" id="calc-apogee">625 m</div>
+                            <div class="calc-output-sub" id="calc-apogee-ft">~2,050 ft</div>
+                        </div>
+                        <div class="calc-output-box">
+                            <div class="calc-output-label">BURNOUT VELOCITY</div>
+                            <div class="calc-output-num" id="calc-velocity">175 m/s</div>
+                            <div class="calc-output-sub" id="calc-mach">Mach 0.51</div>
+                        </div>
+                        <div class="calc-output-box">
+                            <div class="calc-output-label">STATIC MARGIN</div>
+                            <div class="calc-output-num" id="calc-stability" style="color: #4caf50;">1.34 cal</div>
+                            <div class="calc-output-sub" id="calc-stability-status" style="color: #4caf50;">OPTIMAL STABLE</div>
+                        </div>
+                        <div class="calc-output-box">
+                            <div class="calc-output-label">LIFTOFF TWR</div>
+                            <div class="calc-output-num" id="calc-twr">17.2 : 1</div>
+                            <div class="calc-output-sub">Rail Exit Safe</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
