@@ -86,6 +86,113 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* World-Class Hero HUD Badges & Telemetry Strip */
+        .hero-hud-badges {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .hud-badge-mission {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(216, 43, 39, 0.12);
+            border: 1px solid rgba(216, 43, 39, 0.35);
+            padding: 6px 14px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .hud-radar-beacon {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #ff1744;
+            box-shadow: 0 0 10px #ff1744;
+            animation: pulseDot 1.8s infinite ease-in-out;
+        }
+
+        .hud-beacon-text {
+            color: #ff5252;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .hud-badge-class {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .hero-metrics-strip {
+            display: inline-flex;
+            align-items: center;
+            gap: 18px;
+            background: rgba(12, 13, 16, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 14px 22px;
+            margin-bottom: 35px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(216, 43, 39, 0.1);
+        }
+
+        .strip-item {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .strip-label {
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .strip-val {
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 800;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .strip-val small {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+        }
+
+        .strip-sep {
+            width: 1px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        @media (max-width: 768px) {
+            .hero-metrics-strip {
+                display: none;
+            }
+        }
+
         /* Spec Sheet Download Button */
         .btn-spec-download {
             background: rgba(255, 255, 255, 0.05);
@@ -2072,13 +2179,47 @@
 
     <div class="content" id="about-section">
         <div class="section">
+            <!-- World-Class Mission Status Badge & Live HUD Pill -->
+            <div class="hero-hud-badges">
+                <div class="hud-badge-mission">
+                    <span class="hud-radar-beacon"></span>
+                    <span class="hud-beacon-text">MISSION MK-1 &bull; STATIC FIRING STAGE</span>
+                </div>
+                <div class="hud-badge-class">
+                    <span>CLASS G SOLID MOTOR</span>
+                </div>
+            </div>
+
             <div class="hero-subtitle">Student Rocket Project &bull; Rise. Explore. Inspire.</div>
             <h1 class="hero-title">
                 <span class="dark-text">Engineered</span>
                 <span class="dark-text">To Rise.</span>
                 <span class="red-text">Built to Explore.</span>
             </h1>
-            <p class="hero-desc">AirBORN is an advanced student sounding rocket project engineered and built in India by student innovators.</p>
+            <p class="hero-desc">AirBORN is an advanced suborbital student sounding rocket engineered in India. Built with dual-stage parachute recovery, 6-DOF telemetry, and Barrowman dynamic stability.</p>
+
+            <!-- Quick Flight Telemetry Micro-Bar -->
+            <div class="hero-metrics-strip">
+                <div class="strip-item">
+                    <span class="strip-label">TARGET APOGEE</span>
+                    <span class="strip-val">625 M <small>(2,050 FT)</small></span>
+                </div>
+                <div class="strip-sep"></div>
+                <div class="strip-item">
+                    <span class="strip-label">PEAK VELOCITY</span>
+                    <span class="strip-val">175 M/S <small>(MACH 0.51)</small></span>
+                </div>
+                <div class="strip-sep"></div>
+                <div class="strip-item">
+                    <span class="strip-label">TOTAL IMPULSE</span>
+                    <span class="strip-val">~140 N&middot;S</span>
+                </div>
+                <div class="strip-sep"></div>
+                <div class="strip-item">
+                    <span class="strip-label">STATIC MARGIN</span>
+                    <span class="strip-val" style="color: #4caf50;">1.34 CAL</span>
+                </div>
+            </div>
             <div class="hero-buttons">
                 <a href="#technology-section" class="btn-primary">
                     FLIGHT TELEMETRY 
