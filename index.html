@@ -2362,7 +2362,7 @@
             </svg>
         </a>
         <ul class="nav-links">
-            <li><a href="index.html" class="active">HOME</a></li>
+            <li><a href="#" class="active">HOME</a></li>
             <li><a href="#about-section">ABOUT</a></li>
             <li><a href="#technology-section">SPECS</a></li>
             <li><a href="#mission-section">MISSION</a></li>
@@ -2431,7 +2431,7 @@
         </div>
     </div>
 
-    <div class="content" id="about-section">
+    <div class="content" id="home-section">
         <div class="section">
             <!-- World-Class Mission Status Badge & Live HUD Pill -->
             <div class="hero-hud-badges">
@@ -2498,7 +2498,7 @@
                 </button>
             </div>
         </div>
-        <div class="section component-section">
+        <div class="section component-section" id="about-section">
             <div style="display: flex; gap: 80px; align-items: flex-start; width: 100%;">
                 <!-- Left Column: Component Details -->
                 <div class="component-block">
@@ -3650,46 +3650,37 @@
         // ----------------------------------------------------
         // Premium Option 1: Active Navigation Scrollspy Engine
         // ----------------------------------------------------
-        const navAnchorLinks = document.querySelectorAll('.nav-links li a[href^="#"], .nav-links li a[href="index.html"]');
-        const spySections = [
-            { id: 'about-section', link: 'index.html' },
-            { id: 'about-section', link: '#about-section' },
-            { id: 'technology-section', link: '#technology-section' },
-            { id: 'mission-section', link: '#mission-section' },
-            { id: 'team-section', link: '#team-section' },
-            { id: 'contact-section', link: '#contact-section' }
-        ];
+        const navAnchorLinks = document.querySelectorAll('.nav-links li a');
 
         const updateScrollspy = () => {
-            const scrollPos = window.scrollY + 180;
-            let currentSectionId = '';
+            const scrollPos = window.scrollY + 200;
+            let activeHref = '#';
 
-            // Check sections from bottom to top
-            const sectionElements = [
-                document.getElementById('contact-section'),
-                document.getElementById('team-section'),
-                document.getElementById('mission-section'),
-                document.getElementById('technology-section'),
-                document.getElementById('about-section')
-            ];
+            if (scrollPos < 450) {
+                activeHref = '#';
+            } else {
+                const sections = [
+                    { id: 'contact-section', href: '#contact-section' },
+                    { id: 'team-section', href: '#team-section' },
+                    { id: 'mission-section', href: '#mission-section' },
+                    { id: 'technology-section', href: '#technology-section' },
+                    { id: 'about-section', href: '#about-section' }
+                ];
 
-            for (const sec of sectionElements) {
-                if (sec && scrollPos >= sec.offsetTop) {
-                    currentSectionId = sec.id;
-                    break;
+                for (const sec of sections) {
+                    const el = document.getElementById(sec.id);
+                    if (el && scrollPos >= el.offsetTop) {
+                        activeHref = sec.href;
+                        break;
+                    }
                 }
-            }
-
-            if (!currentSectionId && window.scrollY < 400) {
-                currentSectionId = 'about-section';
             }
 
             navAnchorLinks.forEach(link => {
                 const href = link.getAttribute('href');
-                if ((currentSectionId === 'about-section' && (href === 'index.html' || href === '#about-section')) ||
-                    (href === `#${currentSectionId}`)) {
+                if (href === activeHref) {
                     link.classList.add('active');
-                } else if (href.startsWith('#') || href === 'index.html') {
+                } else {
                     link.classList.remove('active');
                 }
             });
