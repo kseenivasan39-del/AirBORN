@@ -56,7 +56,7 @@
     <link rel="icon" type="image/jpeg" href="assets/sticker.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         html {
@@ -68,8 +68,10 @@
             background-color: #000;
             color: #fff;
             height: 500vh; /* Make the page scrollable */
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             
             /* Prevent text selection */
             -webkit-user-select: none;
@@ -185,50 +187,56 @@
         }
 
         .btn-primary {
-            background-color: #d82b27;
+            background: linear-gradient(135deg, #e53935 0%, #b71c1c 100%);
             color: #ffffff;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 1.5px;
-            padding: 16px 36px;
-            border-radius: 3px;
+            letter-spacing: 2px;
+            padding: 16px 34px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(216, 43, 39, 0.2);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px rgba(216, 43, 39, 0.35);
             text-transform: uppercase;
+            font-family: 'Space Grotesk', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .btn-primary:hover {
-            background-color: #b7201e;
-            box-shadow: 0 6px 20px rgba(216, 43, 39, 0.4);
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #ef5350 0%, #c62828 100%);
+            box-shadow: 0 8px 25px rgba(216, 43, 39, 0.55);
+            transform: translateY(-2px);
         }
 
         .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #1a1a1a;
-            border: 1px solid rgba(26, 26, 26, 0.3);
+            background-color: rgba(255, 255, 255, 0.65);
+            color: #0f1012;
+            border: 1px solid rgba(0, 0, 0, 0.15);
             text-decoration: none;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 1.5px;
-            padding: 16px 36px;
-            border-radius: 3px;
+            letter-spacing: 2px;
+            padding: 16px 34px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             text-transform: uppercase;
+            font-family: 'Space Grotesk', sans-serif;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         
         .btn-secondary:hover {
-            background-color: rgba(26, 26, 26, 0.05);
-            border-color: rgba(26, 26, 26, 0.8);
-            transform: translateY(-1px);
+            background-color: #ffffff;
+            border-color: rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
         }
 
         /* Component Section Styles */
@@ -759,31 +767,41 @@
             align-items: center;
             text-align: center;
             position: relative;
+            padding: 24px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 0 6px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .team-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 20px;
-            height: 100px;
-            width: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
+        .team-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(216, 43, 39, 0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
         .team-item img {
-            height: 60px;
+            height: 64px;
             object-fit: contain;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+            transition: transform 0.3s ease;
+        }
+
+        .team-item:hover img {
+            transform: scale(1.08);
         }
 
         .team-role {
             color: #fff;
             font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            line-height: 1.4;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            line-height: 1.45;
             text-transform: uppercase;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .footer-section {
@@ -1197,14 +1215,22 @@
             left: 0;
             width: 100%;
             height: 80px;
-            background: transparent;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 40px;
             box-sizing: border-box;
             z-index: 1000;
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 12, 0.88);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .navbar.hidden {
@@ -1212,13 +1238,12 @@
         }
 
         .logo {
-            font-size: 32px;
-            font-weight: 900;
-            font-style: italic;
+            font-size: 30px;
+            font-weight: 800;
             display: flex;
             align-items: center;
-            letter-spacing: 0.5px;
-            font-family: 'Arial Black', Impact, sans-serif;
+            letter-spacing: 1.5px;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .logo-white {
@@ -1245,12 +1270,14 @@
         }
 
         .nav-links li a {
-            color: #ffffff;
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            letter-spacing: 1px;
-            transition: color 0.3s;
+            letter-spacing: 1.5px;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            transition: color 0.25s ease;
             position: relative;
         }
         
@@ -1908,40 +1935,47 @@
         let lastScrollTop = 0;
         const navbar = document.querySelector('.navbar');
 
-        // Scrub through frames on scroll
+        // Scrub through frames on scroll with smart navbar & rAF throttling
+        let isTicking = false;
+        
         window.addEventListener('scroll', () => {
-            const scrollTop = document.documentElement.scrollTop;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
-            // The scrollable video portion is exactly 500vh (400vh scroll distance)
-            const maxScrollTop = window.innerHeight * 4; 
-            const scrollFraction = Math.min(1, scrollTop / maxScrollTop);
-            
-            // Navbar hide/show logic
-            if (scrollTop > 80) {
-                // Scrolled past the top
-                navbar.classList.add('hidden');
+            // Navbar behavior: solid dark background when scrolled, hide only on fast downward scroll
+            if (scrollTop > 60) {
+                navbar.classList.add('scrolled');
             } else {
-                // At the top
+                navbar.classList.remove('scrolled');
+            }
+
+            if (scrollTop > 200 && scrollTop > lastScrollTop + 10) {
+                // Scrolling down past threshold -> hide
+                navbar.classList.add('hidden');
+            } else if (scrollTop < lastScrollTop - 5 || scrollTop <= 60) {
+                // Scrolling up or near top -> show
                 navbar.classList.remove('hidden');
             }
             lastScrollTop = scrollTop;
-            
-            // Map scroll fraction to a frame index, finishing the animation at 75% scroll of the 400vh distance.
-            // This ensures the rocket is fully exploded by the time the Propulsion section is visible.
-            const adjustedFraction = Math.min(1, scrollFraction / 0.75);
-            const frameIndex = Math.min(
-                frameCount - 1,
-                Math.floor(adjustedFraction * frameCount)
-            );
-            
-            requestAnimationFrame(() => {
-                if(images[frameIndex] && images[frameIndex].complete) {
-                    context.drawImage(images[frameIndex], 0, 0);
-                }
-                // Keep it fixed
-                canvas.style.transform = `scale(1)`;
-            });
-        });
+
+            if (!isTicking) {
+                window.requestAnimationFrame(() => {
+                    const maxScrollTop = window.innerHeight * 4; 
+                    const scrollFraction = Math.min(1, Math.max(0, scrollTop / maxScrollTop));
+                    
+                    const adjustedFraction = Math.min(1, scrollFraction / 0.75);
+                    const frameIndex = Math.min(
+                        frameCount - 1,
+                        Math.floor(adjustedFraction * frameCount)
+                    );
+                    
+                    if (images[frameIndex] && images[frameIndex].complete) {
+                        context.drawImage(images[frameIndex], 0, 0);
+                    }
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
+        }, { passive: true });
         
         // Fade in animation for component sections
         const observerOptions = {

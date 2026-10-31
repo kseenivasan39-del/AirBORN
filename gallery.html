@@ -18,7 +18,7 @@
     <link rel="icon" type="image/jpeg" href="assets/sticker.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         html {
@@ -29,9 +29,11 @@
             padding: 0;
             background-color: #000;
             color: #fff;
-            height: auto; /* Make the page scrollable */
-            font-family: system-ui, -apple-system, sans-serif;
+            height: auto;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             
             /* Prevent text selection */
             -webkit-user-select: none;
@@ -1159,14 +1161,17 @@
             left: 0;
             width: 100%;
             height: 80px;
-            background: transparent;
+            background: rgba(10, 10, 12, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 40px;
             box-sizing: border-box;
             z-index: 1000;
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.35s ease-in-out;
         }
 
         .navbar.hidden {
@@ -1174,13 +1179,12 @@
         }
 
         .logo {
-            font-size: 32px;
-            font-weight: 900;
-            font-style: italic;
+            font-size: 30px;
+            font-weight: 800;
             display: flex;
             align-items: center;
-            letter-spacing: 0.5px;
-            font-family: 'Arial Black', Impact, sans-serif;
+            letter-spacing: 1.5px;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .logo-white {
@@ -1207,12 +1211,14 @@
         }
 
         .nav-links li a {
-            color: #ffffff;
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            letter-spacing: 1px;
-            transition: color 0.3s;
+            letter-spacing: 1.5px;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            transition: color 0.25s ease;
             position: relative;
         }
         
