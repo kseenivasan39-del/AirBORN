@@ -86,6 +86,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Aerospace Ambient Glow Cursor Follower (Desktop Only) */
+        .aerospace-cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 480px;
+            height: 480px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(216, 43, 39, 0.08) 0%, rgba(216, 43, 39, 0.02) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 9990;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            mix-blend-mode: screen;
+        }
+
+        @media (max-width: 1024px) {
+            .aerospace-cursor-glow {
+                display: none;
+            }
+        }
+
+        /* Navbar Mission Elapsed Time (MET) Clock */
+        .nav-mission-clock {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 7px 12px;
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        .clock-label {
+            color: #d82b27;
+            font-size: 10px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+        }
+
+        .clock-time {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 1150px) {
+            .nav-mission-clock {
+                display: none;
+            }
+        }
+
         /* World-Class Hero HUD Badges & Telemetry Strip */
         .hero-hud-badges {
             display: flex;
@@ -2109,6 +2165,9 @@
 
 </head>
 <body>
+    <!-- World-Class Aerospace Ambient Glow Cursor Follower -->
+    <div class="aerospace-cursor-glow" id="cursor-glow"></div>
+
     <!-- Top Scroll Progress Indicator Bar -->
     <div class="scroll-progress-container">
         <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
@@ -2138,6 +2197,12 @@
             <li><a href="#contact-section">CONTACT</a></li>
         </ul>
         <div style="display: flex; align-items: center; gap: 14px;">
+            <!-- Live Mission Elapsed Time / Status Clock -->
+            <div class="nav-mission-clock" title="Mission Elapsed Active Operational Clock">
+                <span class="clock-label">T+MET</span>
+                <span class="clock-time" id="mission-clock">00:00:00 UTC</span>
+            </div>
+
             <button class="sound-toggle-btn" id="sound-toggle-btn" aria-label="Toggle Cockpit SFX" title="Cockpit Sound Effects">
                 <svg id="sound-icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -2881,6 +2946,47 @@
 
         // Scrub through frames on scroll with smart navbar & rAF throttling
         let isTicking = false;
+
+        // ----------------------------------------------------
+        // Live UTC Mission Clock Engine
+        // ----------------------------------------------------
+        const missionClock = document.getElementById('mission-clock');
+        const updateMissionClock = () => {
+            if (!missionClock) return;
+            const now = new Date();
+            const h = String(now.getUTCHours()).padStart(2, '0');
+            const m = String(now.getUTCMinutes()).padStart(2, '0');
+            const s = String(now.getUTCSeconds()).padStart(2, '0');
+            missionClock.textContent = `${h}:${m}:${s} UTC`;
+        };
+        setInterval(updateMissionClock, 1000);
+        updateMissionClock();
+
+        // ----------------------------------------------------
+        // Smooth Aerospace Cursor Glow Follower
+        // ----------------------------------------------------
+        const cursorGlow = document.getElementById('cursor-glow');
+        if (cursorGlow && window.innerWidth > 1024) {
+            let cursorX = window.innerWidth / 2;
+            let cursorY = window.innerHeight / 2;
+            let targetX = cursorX;
+            let targetY = cursorY;
+
+            window.addEventListener('mousemove', (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+            }, { passive: true });
+
+            const animateCursor = () => {
+                cursorX += (targetX - cursorX) * 0.15;
+                cursorY += (targetY - cursorY) * 0.15;
+                cursorGlow.style.left = `${cursorX}px`;
+                cursorGlow.style.top = `${cursorY}px`;
+                requestAnimationFrame(animateCursor);
+            };
+            requestAnimationFrame(animateCursor);
+        }
+
 
         // ----------------------------------------------------
         // Real-Time Ballistic Flight Calculator Engine
