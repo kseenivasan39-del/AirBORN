@@ -86,6 +86,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Top Scroll Progress Indicator Bar */
+        .scroll-progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: transparent;
+            z-index: 10001;
+            pointer-events: none;
+        }
+
+        .scroll-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff1744, #d82b27, #ff5252);
+            box-shadow: 0 0 10px rgba(216, 43, 39, 0.8), 0 0 4px #ff5252;
+            transition: width 0.1s linear;
+        }
+
         /* Custom Modern Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -1557,6 +1577,11 @@
 
 </head>
 <body>
+    <!-- Top Scroll Progress Indicator Bar -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+    </div>
+
     <nav class="navbar">
         <a href="index.html" class="logo" style="text-decoration: none; cursor: pointer;">
             <span class="logo-white">Air</span><span class="logo-red">BORN</span>
@@ -1977,7 +2002,7 @@
                     <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c0 0-4 4-4 10a4 4 0 0 0 8 0c0-6-4-10-4-10z"/></svg></div>
                     <div class="perf-info">
                         <h4>PROPELLANT MASS</h4>
-                        <p class="perf-main">125 g</p>
+                        <p class="perf-main counter" data-target="125" data-suffix=" g">0 g</p>
                         <p class="perf-sub">(65:35 KNO₃ : Sugar/Sorbitol)</p>
                     </div>
                 </div>
@@ -1985,7 +2010,7 @@
                     <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22V2M8 6l4-4 4 4"/></svg></div>
                     <div class="perf-info">
                         <h4>TOTAL IMPULSE</h4>
-                        <p class="perf-main">~140 N·s</p>
+                        <p class="perf-main counter" data-prefix="~" data-target="140" data-suffix=" N·s">~0 N·s</p>
                         <p class="perf-sub">&nbsp;</p>
                     </div>
                 </div>
@@ -1993,7 +2018,7 @@
                     <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l6-6 4 4 8-8M17 7h4v4"/></svg></div>
                     <div class="perf-info">
                         <h4>PEAK ALTITUDE</h4>
-                        <p class="perf-main">~625 m</p>
+                        <p class="perf-main counter" data-prefix="~" data-target="625" data-suffix=" m">~0 m</p>
                         <p class="perf-sub">(2,050 ft)</p>
                     </div>
                 </div>
@@ -2001,7 +2026,7 @@
                     <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M12 6l3 3M12 6L9 9"/></svg></div>
                     <div class="perf-info">
                         <h4>MAX VELOCITY</h4>
-                        <p class="perf-main">~175 m/s</p>
+                        <p class="perf-main counter" data-prefix="~" data-target="175" data-suffix=" m/s">~0 m/s</p>
                         <p class="perf-sub">(Mach 0.51 / 630 km/h)</p>
                     </div>
                 </div>
@@ -2010,7 +2035,7 @@
                     <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
                     <div class="perf-info">
                         <h4>PEAK ACCELERATION</h4>
-                        <p class="perf-main">~135 m/s²</p>
+                        <p class="perf-main counter" data-prefix="~" data-target="135" data-suffix=" m/s²">~0 m/s²</p>
                         <p class="perf-sub">(~13.8 g)</p>
                     </div>
                 </div>
@@ -2018,7 +2043,7 @@
                     <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6v6l4 2"/></svg></div>
                     <div class="perf-info">
                         <h4>AVERAGE THRUST</h4>
-                        <p class="perf-main">~78 N</p>
+                        <p class="perf-main counter" data-prefix="~" data-target="78" data-suffix=" N">~0 N</p>
                         <p class="perf-sub">(Burn Time ~1.8 s)</p>
                     </div>
                 </div>
@@ -2026,7 +2051,7 @@
                     <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
                     <div class="perf-info">
                         <h4>COAST TIME</h4>
-                        <p class="perf-main">~4.9 s</p>
+                        <p class="perf-main counter" data-prefix="~" data-target="4.9" data-decimals="1" data-suffix=" s">~0 s</p>
                         <p class="perf-sub">(Total to apogee ~6.7 s)</p>
                     </div>
                 </div>
@@ -2034,7 +2059,7 @@
                     <div class="perf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l-4 2"/></svg></div>
                     <div class="perf-info">
                         <h4>TOUCHDOWN VELOCITY</h4>
-                        <p class="perf-main">~6.8 m/s</p>
+                        <p class="perf-main counter" data-prefix="~" data-target="6.8" data-decimals="1" data-suffix=" m/s">~0 m/s</p>
                         <p class="perf-sub">&nbsp;</p>
                     </div>
                 </div>
@@ -2123,6 +2148,57 @@
         // Scrub through frames on scroll with smart navbar & rAF throttling
         let isTicking = false;
 
+        // Top Scroll Progress Bar
+        const scrollProgressBar = document.getElementById('scroll-progress-bar');
+        
+        // Animated Numbers Counter for Flight Telemetry
+        const counters = document.querySelectorAll('.counter');
+        let countersAnimated = false;
+
+        const animateCounters = () => {
+            if (countersAnimated) return;
+            countersAnimated = true;
+
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const prefix = counter.getAttribute('data-prefix') || '';
+                const suffix = counter.getAttribute('data-suffix') || '';
+                const decimals = parseInt(counter.getAttribute('data-decimals') || '0', 10);
+                const duration = 1800; // ms
+                const startTime = performance.now();
+
+                const updateNumber = currentTime => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(1, elapsed / duration);
+                    // Ease-out cubic formula
+                    const easeOut = 1 - Math.pow(1 - progress, 3);
+                    const currentVal = (target * easeOut).toFixed(decimals);
+                    counter.textContent = `${prefix}${currentVal}${suffix}`;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        counter.textContent = `${prefix}${target.toFixed(decimals)}${suffix}`;
+                    }
+                };
+
+                requestAnimationFrame(updateNumber);
+            });
+        };
+
+        const telemetrySection = document.getElementById('technology-section');
+        if (telemetrySection) {
+            const telemetryObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                    }
+                });
+            }, { threshold: 0.15 });
+            telemetryObserver.observe(telemetrySection);
+        }
+
+
         // Scroll Pill & Back to Top logic
         const scrollPill = document.getElementById('scroll-pill');
         const backToTopBtn = document.getElementById('back-to-top');
@@ -2170,6 +2246,13 @@
                 navbar.classList.remove('hidden');
             }
             lastScrollTop = scrollTop;
+
+            // Update Top Progress Bar
+            if (scrollProgressBar) {
+                const totalDocHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const totalProgress = totalDocHeight > 0 ? (scrollTop / totalDocHeight) * 100 : 0;
+                scrollProgressBar.style.width = `${totalProgress}%`;
+            }
 
             if (!isTicking) {
                 window.requestAnimationFrame(() => {
