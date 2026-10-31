@@ -116,5 +116,7 @@
 
 <div align="center">
   <img src="assets/sticker.jpg" alt="AirBORN Mission Patch" width="220" style="border-radius: 50%; margin: 30px 0;" />
-  <p><b>AirBORN Aerospace Engineering</b><br/>Designed and Fabricated in India.</p>
+  <p><b>AirBORN Aerospace Engineering</b><br/>Designed and Fabricated in India.<br/>
+  📬 <b>Contact:</b> <a href="mailto:airbornrising@gmail.com">airbornrising@gmail.com</a>
+  </p>
 </div>
