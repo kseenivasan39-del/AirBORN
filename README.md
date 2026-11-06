@@ -1,4 +1,4 @@
-# 🚀 AirBORN — Suborbital Student Sounding Rocket
+# 🚀 AirBORN — Student Rocket and Aerospace Systems
 
 <div align="center">
 
